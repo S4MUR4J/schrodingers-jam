@@ -2,9 +2,29 @@ using UnityEngine;
 
 public class BaseElement : MonoBehaviour
 {
-    private GameObject _prefab;
-
+    [SerializeField] private float lerpSpeed = 5f;
+    
     protected BaseNode parentNode;
+    private GameObject _prefab;
+    private bool _isLerping = false;
+    private Vector3 _targetPosition;
+
+    private void Update()
+    {
+        if (!_isLerping)
+        {
+            return;
+        }
+        transform.position = Vector3.Lerp(transform.position, _targetPosition, Time.deltaTime * lerpSpeed);
+
+        if (!(Vector3.Distance(transform.position, _targetPosition) < 0.001f))
+        {
+            return;
+        }
+        transform.position = _targetPosition;
+        _isLerping = false;
+    }
+
 
     public void SetParentNode(BaseNode newNode, bool movePlayer = false)
     {
@@ -24,7 +44,8 @@ public class BaseElement : MonoBehaviour
         newNode.SetElement(this, movePlayer);
 
         transform.parent = newNode.GetNodeTopPoint();
-        transform.localPosition = Vector3.zero;
+        _targetPosition = newNode.GetNodeTopPoint().position;
+        _isLerping = true;
     }
 
     public BaseNode GetParentNode()
