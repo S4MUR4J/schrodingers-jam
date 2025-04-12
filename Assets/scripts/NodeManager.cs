@@ -19,7 +19,6 @@ public class NodeManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            Debug.Log("NodeManager instance created.");
         }
         else
         {
@@ -36,7 +35,7 @@ public class NodeManager : MonoBehaviour
 
     private void SpawnNodeGrid()
     {
-        Debug.Log("Spawning Node Grid");
+        
 
         var gridHeight = level.nodes.Count;
 
@@ -101,7 +100,6 @@ public class NodeManager : MonoBehaviour
         if (element != null)
         {
             element.SetParentNode(node);
-            Debug.Log("Element Spawned on node: " + node.name);
         }
         else
         {

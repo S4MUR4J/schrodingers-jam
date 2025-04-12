@@ -15,11 +15,11 @@ public class BaseNode : MonoBehaviour
     private void Awake()
     {
 
-        Debug.Log("BaseNode Created" + name);
+       
 
         pattern = Constants.Words[UnityEngine.Random.Range(0, Constants.Words.Count - 1)];
         _text.text = pattern;
-        Debug.Log("Pattern: " + pattern);
+       
     }
 
     public void SetElement(BaseElement newElement)
