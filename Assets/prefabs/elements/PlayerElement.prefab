@@ -160,17 +160,55 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8094449318207142127, guid: b6a694d3b97f6407ca9d00d835c0089c, type: 3}
     m_RemovedGameObjects:
     - {fileID: 8136500027194188585, guid: b6a694d3b97f6407ca9d00d835c0089c, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 9099742085402715832, guid: b6a694d3b97f6407ca9d00d835c0089c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6900769121229225126}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5484573633745445403, guid: b6a694d3b97f6407ca9d00d835c0089c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5803635981133176173}
+    - targetCorrespondingSourceObject: {fileID: 5484573633745445403, guid: b6a694d3b97f6407ca9d00d835c0089c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5693354025971380555}
   m_SourcePrefab: {fileID: 100100000, guid: b6a694d3b97f6407ca9d00d835c0089c, type: 3}
 --- !u!4 &6907659235771713261 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9099742085402715832, guid: b6a694d3b97f6407ca9d00d835c0089c, type: 3}
   m_PrefabInstance: {fileID: 2419603210269843541}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7892900181708472910 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5484573633745445403, guid: b6a694d3b97f6407ca9d00d835c0089c, type: 3}
+  m_PrefabInstance: {fileID: 2419603210269843541}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5803635981133176173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7892900181708472910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6585b7deeec4d15a857ed03aa6bdf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5693354025971380555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7892900181708472910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1b533c2c7efc4d398bc1481e713ef24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _finishPattern: :wqa
+  _playerInfo: {fileID: 5803635981133176173}

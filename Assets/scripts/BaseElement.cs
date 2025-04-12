@@ -6,16 +6,16 @@ public class BaseElement : MonoBehaviour
     
     private GameObject _prefab;
     
-    private BaseNode _parentNode;
+    protected BaseNode parentNode;
 
     public void SetParentNode(BaseNode newNode)
     {
-        if (_parentNode != null)
+        if (parentNode != null)
         {
-            _parentNode.ClearElement();
+            parentNode.ClearElement();
         }
 
-        _parentNode = newNode;
+        parentNode = newNode;
 
         if (newNode.HasElement())
         {
@@ -30,12 +30,12 @@ public class BaseElement : MonoBehaviour
 
     public BaseNode GetParentNode()
     {
-        return _parentNode;
+        return parentNode;
     }
 
     public void DestroySelf()
     {
-        _parentNode.ClearElement();
+        parentNode.ClearElement();
         Destroy(gameObject);
     }
     

@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using Logger = Utils.Logger;
 
 namespace Player
 {
-    public class PlayerInfo : MonoBehaviour
+    public class PlayerInfo : BaseElement 
     { 
         private Tuple<int, int> _currentPosition;
         private List<BaseNode> _neighbourNodes;
@@ -26,7 +25,7 @@ namespace Player
         private void Start()
         {
             NeighbourNodes = new List<BaseNode>();
-            _currentPosition = NodeManager.instance.GetPlayerPosition();
+            _currentPosition = parentNode.Position;
             UpdateNeighbourNodes();
         }
 
@@ -38,7 +37,7 @@ namespace Player
     
         private List<BaseNode> GetNeighbourNodes()
         {
-            var neighbourNodesFiltered = GetNeighbourNodesPosition().Where(element => element.Item1 > 0 && element.Item2 > 0).Select(position => NodeManager.instance.GetNode(position)).ToList();
+            var neighbourNodesFiltered = NodeManager.instance.GetNeighbors(parentNode);
             neighbourNodesFiltered.ForEach(node => Logger.Log("Pattern to match: " + node.Pattern));
             
             return neighbourNodesFiltered;

@@ -60,6 +60,7 @@ namespace Player
                 _typedLetters.Clear();
 
 
+            Logger.Log("Current players input: " + TypeSentence);
             var fullRegexMatch = nodes.FirstOrDefault(node =>
             {
                 var pattern = (node.Pattern + _finishPattern).ToUpper();

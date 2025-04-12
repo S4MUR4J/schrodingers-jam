@@ -80,6 +80,7 @@ public class NodeManager : MonoBehaviour
 
         if (node != null)
         {
+            node.Position = new Tuple<int, int>(x, z);
             row.Add(node);
         }
         else
@@ -109,11 +110,48 @@ public class NodeManager : MonoBehaviour
             Debug.LogError("No BaseElement found on the prefab!");
         }
     }
-
-    public BaseNode GetNode(Tuple<int, int> position)
+    
+    public List<BaseNode> GetNeighbors(BaseNode node)
     {
-        return _nodes[position.Item1][position.Item2];
-    }
+        var neighbors = new List<BaseNode>();
+
+        // Find node's position in grid
+        int nodeX = -1, nodeZ = -1;
+
+        for (int x = 0; x < _nodes.Count; x++)
+        {
+            for (int z = 0; z < _nodes[x].Count; z++)
+            {
+                if (_nodes[x][z] == node)
+                {
+                    nodeX = x;
+                    nodeZ = z;
+                    break;
+                }
+            }
+
+            if (nodeX != -1) break;
+        }
+
+        // Check for neighbors in the 4 possible directions
+        // Up
+        if (nodeX > 0)
+            neighbors.Add(_nodes[nodeX - 1][nodeZ]);
+
+        // Down
+        if (nodeX < _nodes.Count - 1)
+            neighbors.Add(_nodes[nodeX + 1][nodeZ]);
+
+        // Left
+        if (nodeZ > 0)
+            neighbors.Add(_nodes[nodeX][nodeZ - 1]);
+
+        // Right
+        if (nodeZ < _nodes[nodeX].Count - 1)
+            neighbors.Add(_nodes[nodeX][nodeZ + 1]);
+
+        return neighbors;
+    } 
     
     public Tuple<int, int> GetPlayerPosition()
     {

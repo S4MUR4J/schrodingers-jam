@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BaseNode : MonoBehaviour
@@ -6,6 +7,8 @@ public class BaseNode : MonoBehaviour
     
     private NodeManager _manager;
     private BaseElement _element;
+
+    public Tuple<int, int> Position;
 
     public string Pattern
     {
