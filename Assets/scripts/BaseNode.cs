@@ -4,36 +4,35 @@ public class BaseNode : MonoBehaviour
 {
     [SerializeField] private Transform nodeTopPoint;
     
-    private NodeManager manager;
-    private BaseElement element;
+    private NodeManager _manager;
+    private BaseElement _element;
 
    
     private void Awake()
     {
-        manager = NodeManager.instance;
-        manager.AddNode(this);
+        _manager = NodeManager.instance;
         Debug.Log("BaseNode Created" + name);
     }
    
     public void SetElement(BaseElement newElement)
     {
-        element = newElement;
+        _element = newElement;
         newElement.transform.parent = nodeTopPoint;
     }
     
     public BaseElement GetElement()
     {
-        return element;
+        return _element;
     }
     
     public void ClearElement()
     {
-        element = null;
+        _element = null;
     }
 
     public bool HasElement()
     {
-        return element != null;
+        return _element != null;
     }
     
     public Transform GetNodeTopPoint() {

@@ -1,16 +1,15 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class NodeManager : MonoBehaviour
 {
-    [SerializeField] GameObject[] nodePrefabs;
-    [SerializeField] GameObject[] elementPrefabs;
+    [SerializeField] private GameObject[] nodePrefabs;
+    [SerializeField] private GameObject[] elementPrefabs;
     [SerializeField] private int gridHeight = 5;
     [SerializeField] private int gridWidth = 5;
     [SerializeField] private float nodeSize = 1f;
 
 
-    private List<BaseNode> nodes = new List<BaseNode>();
+    private BaseNode[,] _nodes;
 
     public static NodeManager instance;
 
@@ -26,9 +25,9 @@ public class NodeManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
 
-    void Start()
+
+    private void Start()
     {
         SpawnNodeGrid();
         FillNodesWithElements();
@@ -38,14 +37,26 @@ public class NodeManager : MonoBehaviour
     {
         Debug.Log("Spawning Node Grid");
 
-        Vector3 startPosition = transform.position;
+        _nodes = new BaseNode[gridHeight, gridWidth];
+        var startPosition = transform.position;
 
-        for (int x = 0; x < gridHeight; x++)
+        for (var x = 0; x < gridHeight; x++)
         {
-            for (int z = 0; z < gridWidth; z++)
+            for (var z = 0; z < gridWidth; z++)
             {
-                Vector3 position = startPosition + new Vector3(x * nodeSize, 0, z * nodeSize);
-                Instantiate(nodePrefabs[0], position, Quaternion.identity, transform);
+                var position = startPosition + new Vector3(x * nodeSize, 0, z * nodeSize);
+                var nodeObj = Instantiate(nodePrefabs[0], position, Quaternion.identity, transform);
+
+                var node = nodeObj.GetComponent<BaseNode>();
+                if (node != null)
+                {
+                    _nodes[x, z] = node;
+                    Debug.Log($"Node added at [{x},{z}]");
+                }
+                else
+                {
+                    Debug.LogError("Node prefab is missing BaseNode component!");
+                }
             }
         }
     }
@@ -55,7 +66,7 @@ public class NodeManager : MonoBehaviour
     {
         Debug.Log("FillNodesWithElements");
 
-        foreach (var node in nodes)
+        foreach (var node in _nodes)
         {
             if (node.HasElement())
             {
@@ -63,10 +74,11 @@ public class NodeManager : MonoBehaviour
                 continue;
             }
 
-            GameObject elementGameObject = Instantiate(elementPrefabs[0], node.transform);
+
+            var elementGameObject = Instantiate(elementPrefabs[Random.Range(0, elementPrefabs.Length)], node.transform);
 
             Debug.Log("spawning element for node " + node.name);
-            BaseElement element = elementGameObject.GetComponent<BaseElement>();
+            var element = elementGameObject.GetComponent<BaseElement>();
             if (element != null)
             {
                 element.SetParentNode(node);
@@ -77,11 +89,5 @@ public class NodeManager : MonoBehaviour
                 Debug.LogError("No BaseElement found on the prefab!");
             }
         }
-    }
-
-    public void AddNode(BaseNode node)
-    {
-        nodes.Add(node);
-        Debug.Log("Node added to manager: " + node.name);
     }
 }

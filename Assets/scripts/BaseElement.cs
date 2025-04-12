@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class BaseElement : MonoBehaviour
 {
-    private GameObject prefab;
+    private GameObject _prefab;
     
-    private BaseNode parentNode;
+    private BaseNode _parentNode;
     
     public void SetParentNode(BaseNode newNode)
     {
-        if (parentNode != null)
+        if (_parentNode != null)
         {
-            parentNode.ClearElement();
+            _parentNode.ClearElement();
         }
 
-        parentNode = newNode;
+        _parentNode = newNode;
 
         if (newNode.HasElement())
         {
@@ -28,12 +28,12 @@ public class BaseElement : MonoBehaviour
 
     public BaseNode GetParentNode()
     {
-        return parentNode;
+        return _parentNode;
     }
 
     public void DestroySelf()
     {
-        parentNode.ClearElement();
+        _parentNode.ClearElement();
         Destroy(gameObject);
     }
     

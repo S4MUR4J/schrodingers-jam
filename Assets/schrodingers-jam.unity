@@ -167,6 +167,8 @@ MonoBehaviour:
   - {fileID: 3387491232253230397, guid: fdf87d86202484e369a0d5e9b5694bb2, type: 3}
   elementPrefabs:
   - {fileID: 5484573633745445403, guid: b6a694d3b97f6407ca9d00d835c0089c, type: 3}
+  - {fileID: 9196887535414384291, guid: 731703cce9d8e4275b5c7a27d3dc37da, type: 3}
+  - {fileID: 5444745224733149004, guid: ffd81c7433c66451a85c50ae7c2a6229, type: 3}
   gridHeight: 13
   gridWidth: 10
   nodeSize: 1
