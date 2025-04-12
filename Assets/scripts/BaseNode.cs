@@ -54,4 +54,9 @@ public class BaseNode : MonoBehaviour
     {
         return nodeTopPoint;
     }
+
+    public BaseNodeSo GetNodeSo()
+    {
+        return _nodeSo;
+    }
 }

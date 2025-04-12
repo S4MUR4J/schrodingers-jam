@@ -3,16 +3,18 @@ using UnityEngine;
 
 public class EndNode : BaseNode
 {
-    [SerializeField] private EndNodeSo endNodeSo;
+    private EndNodeSo _endNodeSo;
+
+    private void Awake()
+    {
+        _endNodeSo = (EndNodeSo)GetNodeSo();
+    }
 
     public override void SetElement(BaseElement newElement, bool movePlayer = false)
     {
         base.SetElement(newElement, movePlayer);
-        NodeManager.instance.LoadNextLevel(endNodeSo.nextLevelSo);
-    }
 
-    public EndNodeSo GetEndNodeSo()
-    {
-        return endNodeSo;
+
+        NodeManager.instance.LoadNextLevel(_endNodeSo.nextLevelSo);
     }
 }
