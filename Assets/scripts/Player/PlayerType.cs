@@ -15,7 +15,7 @@ namespace Player
         [SerializeField]
         private PlayerInfo _playerInfo;
 
-        private string TypeSentence
+        public string TypeSentence
         {
             get
             {
@@ -80,6 +80,7 @@ namespace Player
             }
 
             _typedLetters.Clear();
+            _playerInfo.UpdateNeighbourNodes();
             _playerInfo.SetParentNode(nodeThatFullRegexMatch);
         }
 
