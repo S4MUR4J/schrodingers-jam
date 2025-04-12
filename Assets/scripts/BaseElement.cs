@@ -18,12 +18,12 @@ public class BaseElement : MonoBehaviour
             parentNode.ClearElement();
         }
 
-        parentNode = newNode;
-
         if (newNode.HasElement())
         {
             Debug.LogError("Node Already has an element!");
         }
+        
+        parentNode = newNode;
 
         newNode.SetElement(this);
 

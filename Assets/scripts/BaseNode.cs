@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class BaseNode : MonoBehaviour
@@ -10,11 +11,12 @@ public class BaseNode : MonoBehaviour
 
     public Tuple<int, int> Position;
 
+    [CanBeNull]
     public string Pattern
     {
         get
         {
-            return _element.Pattern;
+            return _element?.Pattern ?? "testy";
         }
     }
 
