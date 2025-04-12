@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace scriptableObjects
 {
-    [CreateAssetMenu(fileName = "BaseLevelSO", menuName = "Scriptable Objects/BaseLevelSO")]
+    [CreateAssetMenu()]
     public class BaseNodeSo : ScriptableObject
     {
         public GameObject prefab;

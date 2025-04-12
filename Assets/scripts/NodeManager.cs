@@ -1,18 +1,19 @@
+using System.Collections.Generic;
+using levelsSO;
+using scriptableObjects;
 using UnityEngine;
 
 public class NodeManager : MonoBehaviour
 {
-    [SerializeField] private GameObject[] nodePrefabs;
-    [SerializeField] private GameObject[] elementPrefabs;
-    [SerializeField] private int gridHeight = 5;
-    [SerializeField] private int gridWidth = 5;
+    [SerializeField] private BaseLevelSo level;
+
     [SerializeField] private float nodeSize = 1f;
 
 
-    private BaseNode[,] _nodes;
+    private List<BaseNode> _nodes;
 
     public static NodeManager instance;
-
+    
     private void Awake()
     {
         if (instance == null)
@@ -30,64 +31,80 @@ public class NodeManager : MonoBehaviour
     private void Start()
     {
         SpawnNodeGrid();
-        FillNodesWithElements();
     }
 
     private void SpawnNodeGrid()
     {
         Debug.Log("Spawning Node Grid");
 
-        _nodes = new BaseNode[gridHeight, gridWidth];
+        var gridHeight = level.nodes.Count;
+
+        _nodes = new List<BaseNode>();
+
         var startPosition = transform.position;
 
         for (var x = 0; x < gridHeight; x++)
         {
+            var gridWidth = level.nodes[x].row.Count;
+
             for (var z = 0; z < gridWidth; z++)
             {
-                var position = startPosition + new Vector3(x * nodeSize, 0, z * nodeSize);
-                var nodeObj = Instantiate(nodePrefabs[0], position, Quaternion.identity, transform);
+                var nodeSo = level.nodes[x].row[z];
 
-                var node = nodeObj.GetComponent<BaseNode>();
-                if (node != null)
+                if (nodeSo == null)
                 {
-                    _nodes[x, z] = node;
-                    Debug.Log($"Node added at [{x},{z}]");
+                    continue;
                 }
-                else
+
+                var node = SpawnNode(nodeSo, startPosition, x, z);
+
+                if (node == null)
                 {
-                    Debug.LogError("Node prefab is missing BaseNode component!");
+                    continue;
                 }
+
+                SpawnElement(node, nodeSo);
             }
         }
     }
 
-
-    private void FillNodesWithElements()
+    private BaseNode SpawnNode(BaseNodeSo nodeSo, Vector3 startPosition, int x, int z)
     {
-        Debug.Log("FillNodesWithElements");
+        var position = startPosition + new Vector3(x * nodeSize, 0, z * nodeSize);
 
-        foreach (var node in _nodes)
+        var nodeObj = Instantiate(nodeSo.prefab, position, Quaternion.identity, transform);
+
+        var node = nodeObj.GetComponent<BaseNode>();
+
+        if (node != null)
         {
-            if (node.HasElement())
-            {
-                Debug.Log("Node already has an element, skipping: " + node.name);
-                continue;
-            }
+            _nodes.Add(node);
+        }
+        else
+        {
+            Debug.LogError("Node prefab is missing BaseNode component!");
+        }
 
+        return node;
+    }
 
-            var elementGameObject = Instantiate(elementPrefabs[Random.Range(0, elementPrefabs.Length)], node.transform);
+    private void SpawnElement(BaseNode node, BaseNodeSo nodeSo)
+    {
+        if (nodeSo.element == null)
+        {
+            return;
+        }
 
-            Debug.Log("spawning element for node " + node.name);
-            var element = elementGameObject.GetComponent<BaseElement>();
-            if (element != null)
-            {
-                element.SetParentNode(node);
-                Debug.Log("Element Spawned on node: " + node.name);
-            }
-            else
-            {
-                Debug.LogError("No BaseElement found on the prefab!");
-            }
+        var elementGameObject = Instantiate(nodeSo.element, node.transform);
+        var element = elementGameObject.GetComponent<BaseElement>();
+        if (element != null)
+        {
+            element.SetParentNode(node);
+            Debug.Log("Element Spawned on node: " + node.name);
+        }
+        else
+        {
+            Debug.LogError("No BaseElement found on the prefab!");
         }
     }
 }

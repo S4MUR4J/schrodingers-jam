@@ -4,15 +4,15 @@ using UnityEngine;
 
 namespace levelsSO
 {
-    [CreateAssetMenu(fileName = "BaseLevelSO", menuName = "Scriptable Objects/BaseLevelSO")]
+    [CreateAssetMenu()]
     public class BaseLevelSo : ScriptableObject
     {
-        public List<NodeRow> nodes = new();
+        public List<NodeRowSo> nodes = new();
     }
 }
 
 [System.Serializable]
-public class NodeRow
+public class NodeRowSo
 {
     public List<BaseNodeSo> row = new ();
 }
