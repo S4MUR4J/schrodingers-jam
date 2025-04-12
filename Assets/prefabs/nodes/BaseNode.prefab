@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: test
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -201,6 +201,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeTopPoint: {fileID: 5536757641009660392}
   _text: {fileID: 3317452366209923354}
+  _nodeSo: {fileID: 11400000, guid: 170b0d382b7d841b0a8637141385cfae, type: 2}
+  pattern: 
 --- !u!1 &3768110226939486950
 GameObject:
   m_ObjectHideFlags: 0

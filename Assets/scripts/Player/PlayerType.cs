@@ -9,24 +9,15 @@ namespace Player
 {
     public class PlayerType : MonoBehaviour
     {
-        
-        public static PlayerType instance { get; private set; }
-        public event EventHandler<PlayerTypeEventArgs> OnPlayerTypeLetter;
-
-        public class PlayerTypeEventArgs : EventArgs
-        {
-            public string CurrentText { get; }
-
-            public PlayerTypeEventArgs(string currentText)
-            {
-                CurrentText = currentText;
-            }
-        }
 
 
         [SerializeField] private string _finishPattern = ":wqa";
 
         [SerializeField] private PlayerInfo _playerInfo;
+
+        private List<char> _typedLetters;
+
+        public static PlayerType instance { get; private set; }
 
         public string TypeSentence
         {
@@ -36,8 +27,6 @@ namespace Player
                 return word;
             }
         }
-
-        private List<char> _typedLetters;
 
 
         private void Awake()
@@ -50,7 +39,7 @@ namespace Player
             {
                 Debug.LogError("PlayerInfo instance already exist!");
             }
-            
+
             _typedLetters = new List<char>();
         }
 
@@ -59,6 +48,7 @@ namespace Player
             HandlePlayerInput();
             MatchInputWithPattern();
         }
+        public event EventHandler<PlayerTypeEventArgs> OnPlayerTypeLetter;
 
         private void MatchInputWithPattern()
         {
@@ -73,13 +63,13 @@ namespace Player
                     var pattern = (node.pattern + _finishPattern).ToUpper();
                     var typedSentence = TypeSentence;
 
-                    var partRegex = new Regex("^" + Regex.Escape(pattern.Substring(startIndex: 0,
-                        length: Math.Min(typedSentence.Length, pattern.Length))) + "$");
+                    var partRegex = new Regex("^" + Regex.Escape(pattern.Substring(0,
+                        Math.Min(typedSentence.Length, pattern.Length))) + "$");
                     if (!partRegex.IsMatch(typedSentence))
                         return;
 
                     matchingNodes.Add(node);
-                } 
+                }
                 );
 
             if (!matchingNodes.Any())
@@ -87,7 +77,6 @@ namespace Player
                 _typedLetters.Clear();
                 OnPlayerTypeLetter?.Invoke(this, new PlayerTypeEventArgs(""));
             }
-                
 
 
             //Logger.Log("Current players input: " + TypeSentence);
@@ -108,7 +97,7 @@ namespace Player
             }
 
             _typedLetters.Clear();
-            _playerInfo.SetParentNode(nodeThatFullRegexMatch, true);
+            _playerInfo.SetParentNode(nodeThatFullRegexMatch);
             _playerInfo.UpdateNeighbourNodes();
             OnPlayerTypeLetter?.Invoke(this, new PlayerTypeEventArgs(""));
         }
@@ -124,8 +113,8 @@ namespace Player
 
             var args = new PlayerTypeEventArgs(TypeSentence);
             OnPlayerTypeLetter?.Invoke(this, args);
-            
-            
+
+
             Logger.Log("Last pressed key stoke in Player Type: " + lastPressedChar);
             Logger.Log("Current TypeSentence In Player Type: " + TypeSentence);
         }
@@ -142,6 +131,16 @@ namespace Player
             }
 
             return null;
+        }
+
+        public class PlayerTypeEventArgs : EventArgs
+        {
+
+            public PlayerTypeEventArgs(string currentText)
+            {
+                CurrentText = currentText;
+            }
+            public string CurrentText { get; }
         }
     }
 }
