@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3026c0e6e4e84542b70860dba849aac, type: 3}
+  m_Script: {fileID: 11500000, guid: 528981310bfa34ecf9f92ceff0f706a2, type: 3}
   m_Name: PlayerNode
   m_EditorClassIdentifier: 
   prefab: {fileID: 3387491232253230397, guid: fdf87d86202484e369a0d5e9b5694bb2, type: 3}
-  element: {fileID: 7892900181708472910, guid: ed98e06505ea743b3a210b29834a4112, type: 3}
+  elementSo: {fileID: 11400000, guid: b499b73f9f3624c64acf67c295537db0, type: 2}
