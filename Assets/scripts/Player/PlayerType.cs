@@ -45,10 +45,10 @@ namespace Player
             var nodes = _playerInfo.NeighbourNodes;
             nodes.ForEach(node =>
                 {
-                    if (node.Pattern == null)
+                    if (node.GetElement().Pattern == null)
                         return;
 
-                    var pattern = (node.Pattern + _finishPattern).ToUpper();
+                    var pattern = (node.GetElement().Pattern + _finishPattern).ToUpper();
                     var typedSentence = TypeSentence;
 
                     var partRegex = new Regex("^" + Regex.Escape(pattern.Substring(startIndex: 0, length: Math.Min(typedSentence.Length, pattern.Length))) + "$");
@@ -66,7 +66,7 @@ namespace Player
             //Logger.Log("Current players input: " + TypeSentence);
             var nodeThatFullRegexMatch = nodes.FirstOrDefault(node =>
             {
-                var pattern = (node.Pattern + _finishPattern).ToUpper();
+                var pattern = (node.GetElement().Pattern + _finishPattern).ToUpper();
                 var fullRegex = new Regex("^" + Regex.Escape(TypeSentence) + "$");
                 return fullRegex.IsMatch(pattern);
             });

@@ -12,21 +12,17 @@ public class BaseElement : MonoBehaviour
 
     protected BaseNode parentNode;
 
-    private void Start()
+    private void Awake()
     {
-        if (elementSo.patterns is { Count: > 0 })
-        {
-            Pattern = elementSo.patterns[Random.Range(0, elementSo.patterns.Count)];
-        }
-        else
-        {
-            Debug.LogWarning("No patterns available in elementSo for: " + gameObject.name);
-            Pattern = string.Empty;
-        }
+        if (elementSo.patterns is not { Count: > 0 }) return;
+        Pattern = elementSo.patterns[0]; //TODO dawaj tutaj randomowy pattern z listy elementSo.patterns 
+        Debug.Log("Randomly selected pattern: " + Pattern);
+
     }
 
     public void SetParentNode(BaseNode newNode)
     {
+        
         if (parentNode != null)
         {
             parentNode.ClearElement();
@@ -36,13 +32,13 @@ public class BaseElement : MonoBehaviour
         {
             Debug.LogError("Node Already has an element!");
         }
-        
+
         parentNode = newNode;
 
         newNode.SetElement(this);
 
         transform.parent = newNode.GetNodeTopPoint();
-        transform.localPosition = Vector3.Lerp(transform.localPosition, Vector3.zero, 2.0f * Time.deltaTime);
+        transform.localPosition = Vector3.zero;
     }
 
     public BaseNode GetParentNode()
