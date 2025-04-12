@@ -9,6 +9,7 @@ public class BaseElement : MonoBehaviour
 
     protected BaseNode parentNode;
 
+
     private void Update()
     {
         if (!_isLerping)
@@ -28,7 +29,6 @@ public class BaseElement : MonoBehaviour
 
     public void SetParentNode(BaseNode newNode, bool hide = false)
     {
-
         if (parentNode != null)
         {
             parentNode.ClearElement();
