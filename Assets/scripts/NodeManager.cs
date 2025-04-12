@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class NodeManager : MonoBehaviour
 {
+
+    public static NodeManager instance;
     [SerializeField] private BaseLevelSo level;
 
     [SerializeField] private float nodeSize = 1f;
 
 
     private List<List<BaseNode>> _nodes;
-
-    public static NodeManager instance;
 
     private void Awake()
     {
@@ -35,7 +35,7 @@ public class NodeManager : MonoBehaviour
 
     private void SpawnNodeGrid()
     {
-        
+
 
         var gridHeight = level.nodes.Count;
 
@@ -68,7 +68,7 @@ public class NodeManager : MonoBehaviour
         }
     }
 
-    private BaseNode SpawnNode(BaseNodeSo nodeSo, Vector3 startPosition, int x, int z,List<BaseNode> row)
+    private BaseNode SpawnNode(BaseNodeSo nodeSo, Vector3 startPosition, int x, int z, List<BaseNode> row)
     {
         var position = startPosition + new Vector3(x * nodeSize, 0, z * nodeSize);
 
@@ -96,7 +96,8 @@ public class NodeManager : MonoBehaviour
         }
 
         var elementGameObject = Instantiate(nodeSo.elementSo.prefab, node.transform);
-        var element = elementGameObject.GetComponent<BaseElement>();
+        var element = elementGameObject
+            .GetComponent<BaseElement>();
         if (element != null)
         {
             element.SetParentNode(node);
@@ -106,7 +107,7 @@ public class NodeManager : MonoBehaviour
             Debug.LogError("No BaseElement found on the prefab!");
         }
     }
-    
+
     public List<BaseNode> GetNeighbors(BaseNode node)
     {
         var neighbors = new List<BaseNode>();
@@ -145,5 +146,5 @@ public class NodeManager : MonoBehaviour
             neighbors.Add(_nodes[nodeX][nodeZ + 1]);
 
         return neighbors;
-    } 
+    }
 }

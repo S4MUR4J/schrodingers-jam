@@ -8,7 +8,7 @@ public class BaseElement : MonoBehaviour
 
     public void SetParentNode(BaseNode newNode, bool movePlayer = false)
     {
-        
+
         if (parentNode != null)
         {
             parentNode.ClearElement();

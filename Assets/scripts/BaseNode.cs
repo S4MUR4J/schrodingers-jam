@@ -1,4 +1,4 @@
-using System;
+using scriptableObjects;
 using TMPro;
 using UnityEngine;
 using Utils;
@@ -7,19 +7,18 @@ public class BaseNode : MonoBehaviour
 {
     [SerializeField] private Transform nodeTopPoint;
     [SerializeField] private TextMeshProUGUI _text;
+    [SerializeField] private BaseNodeSo _nodeSo;
+    public string pattern;
 
     private BaseElement _element;
-    public String pattern;
 
 
     private void Awake()
     {
+        pattern = Constants.Words[Random.Range(0, Constants.Words.Count - 1)];
 
-       
-
-        pattern = Constants.Words[UnityEngine.Random.Range(0, Constants.Words.Count - 1)];
-        _text.text = pattern;
-       
+        if (_nodeSo.withPattern)
+            _text.text = pattern;
     }
 
     public void SetElement(BaseElement newElement, bool movePlayer = false)
