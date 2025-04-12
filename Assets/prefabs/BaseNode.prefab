@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4819150594735614017}
   - component: {fileID: 8008855382789406341}
   m_Layer: 0
-  m_Name: Node
+  m_Name: BaseNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efb3760771de242ce87c3ce2a3e24617, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoint: {fileID: 5536757641009660392}
+  nodeTopPoint: {fileID: 5536757641009660392}
 --- !u!1 &3768110226939486950
 GameObject:
   m_ObjectHideFlags: 0
