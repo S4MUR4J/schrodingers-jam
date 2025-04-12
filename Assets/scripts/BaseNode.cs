@@ -2,6 +2,7 @@ using System;
 using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
+using Utils;
 
 public class BaseNode : MonoBehaviour
 {
@@ -14,12 +15,18 @@ public class BaseNode : MonoBehaviour
 
     public Tuple<int, int> Position;
 
+    public String pattern;
+
 
     private void Awake()
     {
         _manager = NodeManager.instance;
 
         Debug.Log("BaseNode Created" + name);
+
+        pattern = Constants.Words[UnityEngine.Random.Range(0, Constants.Words.Count - 1)];
+        _text.text = pattern;
+        Debug.Log("Pattern: " + pattern);
     }
 
     public void SetElement(BaseElement newElement)
@@ -32,18 +39,6 @@ public class BaseNode : MonoBehaviour
 
         _element = newElement;
         newElement.transform.parent = nodeTopPoint;
-
-        if (_element == null)
-        {
-            _text.text = "test";
-        }
-        else
-        {
-            _text.text = _element.Pattern;
-        }
-
-
-        Debug.Log("Text set to: " + _element.Pattern);
     }
 
     public BaseElement GetElement()
