@@ -2,15 +2,14 @@ using UnityEngine;
 
 public class Node : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private GameObject child;
+    [SerializeField]private Transform spawnPoint;
+    
+    
+    
+    public void SetChild(GameObject child)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        this.child = child;
+        child.transform.parent = spawnPoint;
     }
 }
