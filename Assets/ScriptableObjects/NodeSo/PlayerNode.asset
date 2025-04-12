@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PlayerNode
   m_EditorClassIdentifier: 
   prefab: {fileID: 3387491232253230397, guid: fdf87d86202484e369a0d5e9b5694bb2, type: 3}
-  elementSo: {fileID: 11400000, guid: b499b73f9f3624c64acf67c295537db0, type: 2}
+  elementSo: {fileID: 11400000, guid: 315bf7cef9e2b4323a296b7898f2e3d6, type: 2}
