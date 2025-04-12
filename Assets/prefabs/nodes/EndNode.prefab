@@ -84,6 +84,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeTopPoint: {fileID: 5332034133241303382}
   _text: {fileID: 3107560913833306532}
+  _nodeSo: {fileID: 11400000, guid: 41efea3ca402041a79be3ac63aa219f8, type: 2}
   pattern: 
   endNodeSo: {fileID: 11400000, guid: 41efea3ca402041a79be3ac63aa219f8, type: 2}
 --- !u!114 &3107560913833306532 stripped

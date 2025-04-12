@@ -1,3 +1,4 @@
+using scriptableObjects;
 using UnityEngine;
 
 public class BaseElement : MonoBehaviour
@@ -34,12 +35,9 @@ public class BaseElement : MonoBehaviour
     {
         if (newNode is EndNode endNode)
         {
-            Debug.Log("new node is trotka");
-            NodeManager.instance.LoadNextLevel(endNode.GetEndNodeSo().nextLevelSo);
-        }
-        else if (hide)
-        {
-            Debug.Log("new node is not trotka");
+            EndNodeSo endNodeSo = (EndNodeSo)newNode.GetNodeSo();
+
+            NodeManager.instance.LoadNextLevel(endNodeSo.nextLevelSo);
         }
 
         if (parentNode != null)
