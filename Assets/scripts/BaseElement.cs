@@ -3,11 +3,11 @@ using UnityEngine;
 public class BaseElement : MonoBehaviour
 {
     [SerializeField] private float lerpSpeed = 5f;
-    
-    protected BaseNode parentNode;
+    private bool _isLerping;
     private GameObject _prefab;
-    private bool _isLerping = false;
     private Vector3 _targetPosition;
+
+    protected BaseNode parentNode;
 
     private void Update()
     {
@@ -26,7 +26,7 @@ public class BaseElement : MonoBehaviour
     }
 
 
-    public void SetParentNode(BaseNode newNode, bool movePlayer = false)
+    public void SetParentNode(BaseNode newNode, bool hide = false)
     {
 
         if (parentNode != null)
@@ -41,7 +41,7 @@ public class BaseElement : MonoBehaviour
 
         parentNode = newNode;
 
-        newNode.SetElement(this, movePlayer);
+        newNode.SetElement(this, hide);
 
         transform.parent = newNode.GetNodeTopPoint();
         _targetPosition = newNode.GetNodeTopPoint().position;

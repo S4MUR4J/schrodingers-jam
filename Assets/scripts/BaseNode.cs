@@ -21,7 +21,7 @@ public class BaseNode : MonoBehaviour
             _text.text = pattern;
     }
 
-    public void SetElement(BaseElement newElement, bool movePlayer = false)
+    public void SetElement(BaseElement newElement, bool hide = false)
     {
         if (newElement == null)
         {
@@ -30,7 +30,7 @@ public class BaseNode : MonoBehaviour
         }
 
         _element = newElement;
-        if (!movePlayer)
+        if (hide)
             _text.text = string.Empty;
         newElement.transform.parent = nodeTopPoint;
     }

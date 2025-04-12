@@ -100,7 +100,7 @@ public class NodeManager : MonoBehaviour
             .GetComponent<BaseElement>();
         if (element != null)
         {
-            element.SetParentNode(node);
+            element.SetParentNode(node, nodeSo.withPattern);
         }
         else
         {
