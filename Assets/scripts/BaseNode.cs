@@ -1,5 +1,4 @@
 using System;
-using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using Utils;
@@ -9,18 +8,12 @@ public class BaseNode : MonoBehaviour
     [SerializeField] private Transform nodeTopPoint;
     [SerializeField] private TextMeshProUGUI _text;
 
-    private NodeManager _manager;
     private BaseElement _element;
-
-
-    public Tuple<int, int> Position;
-
     public String pattern;
 
 
     private void Awake()
     {
-        _manager = NodeManager.instance;
 
         Debug.Log("BaseNode Created" + name);
 

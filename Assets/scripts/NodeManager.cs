@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using levelsSO;
 using scriptableObjects;
@@ -80,7 +79,6 @@ public class NodeManager : MonoBehaviour
 
         if (node != null)
         {
-            node.Position = new Tuple<int, int>(x, z);
             row.Add(node);
         }
         else
@@ -150,9 +148,4 @@ public class NodeManager : MonoBehaviour
 
         return neighbors;
     } 
-    
-    public Tuple<int, int> GetPlayerPosition()
-    {
-        return new Tuple<int, int>(1, 1); // TODO
-    }
 }
