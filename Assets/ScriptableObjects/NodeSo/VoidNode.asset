@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 528981310bfa34ecf9f92ceff0f706a2, type: 3}
-  m_Name: EmptyNode
+  m_Name: VoidNode
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3387491232253230397, guid: fdf87d86202484e369a0d5e9b5694bb2, type: 3}
-  element: {fileID: 5484573633745445403, guid: b6a694d3b97f6407ca9d00d835c0089c, type: 3}
+  prefab: {fileID: 1886005399205596895, guid: 187d54aaa11034c049d86f775e40e3c9, type: 3}
+  element: {fileID: 1737115840048471167, guid: 30f38e9266c6b44fca4bbb6c275ea897, type: 3}
