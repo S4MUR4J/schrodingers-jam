@@ -7,6 +7,8 @@ namespace Player
 {
     public class PlayerInfo : BaseElement
     {
+       
+
         private List<BaseNode> _neighbourNodes;
 
         public List<BaseNode> NeighbourNodes
@@ -14,6 +16,9 @@ namespace Player
             get { return _neighbourNodes; }
             private set { _neighbourNodes = value; }
         }
+
+
+        
 
         private void Start()
         {
@@ -27,8 +32,8 @@ namespace Player
             else
             {
                 mainCamera.transform.SetParent(transform);
-                mainCamera.transform.localPosition = new Vector3(0, 3, 0); 
-                mainCamera.transform.localRotation = Quaternion.Euler(90, 0, 0); 
+                mainCamera.transform.localPosition = new Vector3(0, 3, 0);
+                mainCamera.transform.localRotation = Quaternion.Euler(90, 0, 0);
             }
 
 

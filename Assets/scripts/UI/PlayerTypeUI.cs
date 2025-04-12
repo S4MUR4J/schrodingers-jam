@@ -6,20 +6,25 @@ namespace UI
 {
     public class PlayerTypeUI : MonoBehaviour
     {
-        [SerializeField]
-        private TextMeshProUGUI _textMeshPro;
-
-        [SerializeField]
-        private PlayerType _playerType;
+        [SerializeField] private TextMeshProUGUI _textMeshPro;
+        
 
         private void Start()
         {
-            _textMeshPro.text = string.Empty;
+            if (_textMeshPro == null)
+            {
+                Debug.LogError("TextMeshPro reference not set in PlayerTypeUI!");
+                return;
+            }
+            
+            PlayerType.instance.OnPlayerTypeLetter += HandlePlayerTyped;
         }
 
-        private void Update()
+
+        private void HandlePlayerTyped(object sender, PlayerType.PlayerTypeEventArgs e)
         {
-            _textMeshPro.text = _playerType.TypeSentence;
+            Debug.Log("HANDLE CALLED! to set text: " + e.CurrentText);
+            _textMeshPro.text = e.CurrentText;
         }
     }
 }

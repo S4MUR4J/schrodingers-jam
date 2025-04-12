@@ -9,11 +9,24 @@ namespace Player
 {
     public class PlayerType : MonoBehaviour
     {
-        [SerializeField]
-        private string _finishPattern = ":wqa";
+        
+        public static PlayerType instance { get; private set; }
+        public event EventHandler<PlayerTypeEventArgs> OnPlayerTypeLetter;
 
-        [SerializeField]
-        private PlayerInfo _playerInfo;
+        public class PlayerTypeEventArgs : EventArgs
+        {
+            public string CurrentText { get; }
+
+            public PlayerTypeEventArgs(string currentText)
+            {
+                CurrentText = currentText;
+            }
+        }
+
+
+        [SerializeField] private string _finishPattern = ":wqa";
+
+        [SerializeField] private PlayerInfo _playerInfo;
 
         public string TypeSentence
         {
@@ -29,6 +42,15 @@ namespace Player
 
         private void Awake()
         {
+            if (instance == null)
+            {
+                instance = this;
+            }
+            else
+            {
+                Debug.LogError("PlayerInfo instance already exist!");
+            }
+            
             _typedLetters = new List<char>();
         }
 
@@ -51,7 +73,8 @@ namespace Player
                     var pattern = (node.pattern + _finishPattern).ToUpper();
                     var typedSentence = TypeSentence;
 
-                    var partRegex = new Regex("^" + Regex.Escape(pattern.Substring(startIndex: 0, length: Math.Min(typedSentence.Length, pattern.Length))) + "$");
+                    var partRegex = new Regex("^" + Regex.Escape(pattern.Substring(startIndex: 0,
+                        length: Math.Min(typedSentence.Length, pattern.Length))) + "$");
                     if (!partRegex.IsMatch(typedSentence))
                         return;
 
@@ -60,7 +83,11 @@ namespace Player
                 );
 
             if (!matchingNodes.Any())
+            {
                 _typedLetters.Clear();
+                OnPlayerTypeLetter?.Invoke(this, new PlayerTypeEventArgs(""));
+            }
+                
 
 
             //Logger.Log("Current players input: " + TypeSentence);
@@ -76,12 +103,14 @@ namespace Player
             if (nodeThatFullRegexMatch.HasElement())
             {
                 _typedLetters.Clear();
+                OnPlayerTypeLetter?.Invoke(this, new PlayerTypeEventArgs(""));
                 return;
             }
 
             _typedLetters.Clear();
             _playerInfo.SetParentNode(nodeThatFullRegexMatch);
             _playerInfo.UpdateNeighbourNodes();
+            OnPlayerTypeLetter?.Invoke(this, new PlayerTypeEventArgs(""));
         }
 
         private void HandlePlayerInput()
@@ -91,7 +120,14 @@ namespace Player
                 return;
 
             _typedLetters.Add(lastPressedChar.Value);
-            Logger.Log("Last pressed key stoke is: " + lastPressedChar);
+
+
+            var args = new PlayerTypeEventArgs(TypeSentence);
+            OnPlayerTypeLetter?.Invoke(this, args);
+            
+            
+            Logger.Log("Last pressed key stoke in Player Type: " + lastPressedChar);
+            Logger.Log("Current TypeSentence In Player Type: " + TypeSentence);
         }
 
         private static char? GetPressedChar()
