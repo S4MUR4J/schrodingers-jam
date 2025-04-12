@@ -7,7 +7,7 @@ namespace Player
 {
     public class PlayerInfo : BaseElement
     {
-       
+
 
         private List<BaseNode> _neighbourNodes;
 
@@ -16,9 +16,6 @@ namespace Player
             get { return _neighbourNodes; }
             private set { _neighbourNodes = value; }
         }
-
-
-        
 
         private void Start()
         {

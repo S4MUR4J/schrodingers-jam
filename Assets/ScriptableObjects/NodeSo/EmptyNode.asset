@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: EmptyNode
   m_EditorClassIdentifier: 
   prefab: {fileID: 3387491232253230397, guid: fdf87d86202484e369a0d5e9b5694bb2, type: 3}
-  element: {fileID: 0}
+  elementSo: {fileID: 0}
+  withPattern: 0

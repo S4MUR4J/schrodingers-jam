@@ -7,7 +7,12 @@ namespace UI
     public class PlayerTypeUI : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _textMeshPro;
-        
+
+
+        private void Awake()
+        {
+            _textMeshPro.text = string.Empty;
+        }
 
         private void Start()
         {
@@ -16,7 +21,7 @@ namespace UI
                 Debug.LogError("TextMeshPro reference not set in PlayerTypeUI!");
                 return;
             }
-            
+
             PlayerType.instance.OnPlayerTypeLetter += HandlePlayerTyped;
         }
 

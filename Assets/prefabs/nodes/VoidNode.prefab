@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3387491232253230397, guid: fdf87d86202484e369a0d5e9b5694bb2, type: 3}
       propertyPath: m_Name
-      value: EmptyNode
+      value: VoidNode
       objectReference: {fileID: 0}
     - target: {fileID: 4819150594735614017, guid: fdf87d86202484e369a0d5e9b5694bb2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8008855382789406341, guid: fdf87d86202484e369a0d5e9b5694bb2, type: 3}
+      propertyPath: _nodeSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 438c4f68741544f3a96049c4ee1ac8db, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 9112973924900462639, guid: fdf87d86202484e369a0d5e9b5694bb2, type: 3}
