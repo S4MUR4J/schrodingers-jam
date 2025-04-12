@@ -36,7 +36,7 @@ namespace Player
             UpdateNeighbourNodes();
         }
 
-        private void UpdateNeighbourNodes()
+        public void UpdateNeighbourNodes()
         {
             NeighbourNodes.Clear();
             NeighbourNodes.AddRange(GetNeighbourNodes());
