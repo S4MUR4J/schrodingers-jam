@@ -93,12 +93,12 @@ public class NodeManager : MonoBehaviour
 
     private void SpawnElement(BaseNode node, BaseNodeSo nodeSo)
     {
-        if (nodeSo.element == null)
+        if (nodeSo.elementSo == null)
         {
             return;
         }
 
-        var elementGameObject = Instantiate(nodeSo.element, node.transform);
+        var elementGameObject = Instantiate(nodeSo.elementSo.prefab, node.transform);
         var element = elementGameObject.GetComponent<BaseElement>();
         if (element != null)
         {
@@ -118,16 +118,14 @@ public class NodeManager : MonoBehaviour
         // Find node's position in grid
         int nodeX = -1, nodeZ = -1;
 
-        for (int x = 0; x < _nodes.Count; x++)
+        for (var x = 0; x < _nodes.Count; x++)
         {
-            for (int z = 0; z < _nodes[x].Count; z++)
+            for (var z = 0; z < _nodes[x].Count; z++)
             {
-                if (_nodes[x][z] == node)
-                {
-                    nodeX = x;
-                    nodeZ = z;
-                    break;
-                }
+                if (_nodes[x][z] != node) continue;
+                nodeX = x;
+                nodeZ = z;
+                break;
             }
 
             if (nodeX != -1) break;

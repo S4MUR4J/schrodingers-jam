@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 528981310bfa34ecf9f92ceff0f706a2, type: 3}
-  m_Name: NodeWithBlueElement
+  m_Script: {fileID: 11500000, guid: e06dbfbf5bb77435e8c2e07b31870cb2, type: 3}
+  m_Name: BaseElement
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3387491232253230397, guid: fdf87d86202484e369a0d5e9b5694bb2, type: 3}
-  element: {fileID: 9196887535414384291, guid: 731703cce9d8e4275b5c7a27d3dc37da, type: 3}
+  prefab: {fileID: 5484573633745445403, guid: b6a694d3b97f6407ca9d00d835c0089c, type: 3}
+  patterns:
+  - test
+  - test1
+  - test2

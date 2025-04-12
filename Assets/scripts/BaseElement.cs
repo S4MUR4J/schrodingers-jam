@@ -1,8 +1,11 @@
+using scriptableObjects;
 using UnityEngine;
 
 public class BaseElement : MonoBehaviour
 {
     [SerializeField] public string Pattern => "TEST3";
+
+    [SerializeField] private BaseElementSo elementSo;
     
     private GameObject _prefab;
     
