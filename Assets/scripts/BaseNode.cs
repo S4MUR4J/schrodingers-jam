@@ -21,7 +21,7 @@ public class BaseNode : MonoBehaviour
             _text.text = pattern;
     }
 
-    public void SetElement(BaseElement newElement, bool hide = false)
+    public virtual void SetElement(BaseElement newElement, bool hide = false)
     {
         if (newElement == null)
         {
