@@ -27,8 +27,8 @@ namespace Player
             else
             {
                 mainCamera.transform.SetParent(transform);
-                mainCamera.transform.localPosition = new Vector3(0, 5, -5); 
-                mainCamera.transform.localRotation = Quaternion.Euler(45, 0, 0); 
+                mainCamera.transform.localPosition = new Vector3(0, 3, 0); 
+                mainCamera.transform.localRotation = Quaternion.Euler(90, 0, 0); 
             }
 
 
