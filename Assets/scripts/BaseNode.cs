@@ -7,7 +7,14 @@ public class BaseNode : MonoBehaviour
     private NodeManager _manager;
     private BaseElement _element;
 
-   
+    public string Pattern
+    {
+        get
+        {
+            return _element.Pattern;
+        }
+    }
+
     private void Awake()
     {
         _manager = NodeManager.instance;

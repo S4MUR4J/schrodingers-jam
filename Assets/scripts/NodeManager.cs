@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using levelsSO;
 using scriptableObjects;
@@ -10,10 +11,10 @@ public class NodeManager : MonoBehaviour
     [SerializeField] private float nodeSize = 1f;
 
 
-    private List<BaseNode> _nodes;
+    private List<List<BaseNode>> _nodes;
 
     public static NodeManager instance;
-    
+
     private void Awake()
     {
         if (instance == null)
@@ -30,6 +31,7 @@ public class NodeManager : MonoBehaviour
 
     private void Start()
     {
+        _nodes = new List<List<BaseNode>>();
         SpawnNodeGrid();
     }
 
@@ -39,12 +41,11 @@ public class NodeManager : MonoBehaviour
 
         var gridHeight = level.nodes.Count;
 
-        _nodes = new List<BaseNode>();
-
         var startPosition = transform.position;
 
         for (var x = 0; x < gridHeight; x++)
         {
+            var rowList = new List<BaseNode>();
             var gridWidth = level.nodes[x].row.Count;
 
             for (var z = 0; z < gridWidth; z++)
@@ -56,7 +57,7 @@ public class NodeManager : MonoBehaviour
                     continue;
                 }
 
-                var node = SpawnNode(nodeSo, startPosition, x, z);
+                var node = SpawnNode(nodeSo, startPosition, x, z, rowList);
 
                 if (node == null)
                 {
@@ -65,10 +66,11 @@ public class NodeManager : MonoBehaviour
 
                 SpawnElement(node, nodeSo);
             }
+            _nodes.Add(rowList);
         }
     }
 
-    private BaseNode SpawnNode(BaseNodeSo nodeSo, Vector3 startPosition, int x, int z)
+    private BaseNode SpawnNode(BaseNodeSo nodeSo, Vector3 startPosition, int x, int z,List<BaseNode> row)
     {
         var position = startPosition + new Vector3(x * nodeSize, 0, z * nodeSize);
 
@@ -78,7 +80,7 @@ public class NodeManager : MonoBehaviour
 
         if (node != null)
         {
-            _nodes.Add(node);
+            row.Add(node);
         }
         else
         {
@@ -106,5 +108,15 @@ public class NodeManager : MonoBehaviour
         {
             Debug.LogError("No BaseElement found on the prefab!");
         }
+    }
+
+    public BaseNode GetNode(Tuple<int, int> position)
+    {
+        return _nodes[position.Item1][position.Item2];
+    }
+    
+    public Tuple<int, int> GetPlayerPosition()
+    {
+        return new Tuple<int, int>(1, 1); // TODO
     }
 }
