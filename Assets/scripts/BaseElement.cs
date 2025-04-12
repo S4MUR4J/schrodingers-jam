@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class BaseElement : MonoBehaviour
 {
-    public string Pattern { get; private set; }
-
     private GameObject _prefab;
 
     protected BaseNode parentNode;

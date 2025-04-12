@@ -45,8 +45,8 @@ namespace Player
         private List<BaseNode> GetNeighbourNodes()
         {
             var neighbourNodesFiltered = NodeManager.instance.GetNeighbors(parentNode)
-                .Where(node => node.GetElement()?.Pattern != null).ToList();
-            neighbourNodesFiltered.ForEach(node => Logger.Log("Pattern to match: " + node.GetElement().Pattern));
+                .Where(node => node.pattern != null).ToList();
+            neighbourNodesFiltered.ForEach(node => Logger.Log("Pattern to match: " + node.pattern));
 
             return neighbourNodesFiltered;
         }

@@ -80,8 +80,8 @@ namespace Player
             }
 
             _typedLetters.Clear();
-            _playerInfo.UpdateNeighbourNodes();
             _playerInfo.SetParentNode(nodeThatFullRegexMatch);
+            _playerInfo.UpdateNeighbourNodes();
         }
 
         private void HandlePlayerInput()
