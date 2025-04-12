@@ -15,7 +15,7 @@ namespace Player
         [SerializeField]
         private PlayerInfo _playerInfo;
 
-        private string TypeSentence
+        public string TypeSentence
         {
             get
             {
