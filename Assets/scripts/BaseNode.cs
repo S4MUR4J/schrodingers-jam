@@ -22,7 +22,7 @@ public class BaseNode : MonoBehaviour
        
     }
 
-    public void SetElement(BaseElement newElement)
+    public void SetElement(BaseElement newElement, bool movePlayer = false)
     {
         if (newElement == null)
         {
@@ -31,6 +31,8 @@ public class BaseNode : MonoBehaviour
         }
 
         _element = newElement;
+        if (!movePlayer)
+            _text.text = string.Empty;
         newElement.transform.parent = nodeTopPoint;
     }
 

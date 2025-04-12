@@ -6,7 +6,7 @@ public class BaseElement : MonoBehaviour
 
     protected BaseNode parentNode;
 
-    public void SetParentNode(BaseNode newNode)
+    public void SetParentNode(BaseNode newNode, bool movePlayer = false)
     {
         
         if (parentNode != null)
@@ -21,7 +21,7 @@ public class BaseElement : MonoBehaviour
 
         parentNode = newNode;
 
-        newNode.SetElement(this);
+        newNode.SetElement(this, movePlayer);
 
         transform.parent = newNode.GetNodeTopPoint();
         transform.localPosition = Vector3.zero;
