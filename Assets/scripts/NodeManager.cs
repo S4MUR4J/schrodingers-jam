@@ -4,6 +4,12 @@ using UnityEngine;
 public class NodeManager : MonoBehaviour
 {
     [SerializeField] GameObject[] nodePrefabs;
+    [SerializeField] GameObject[] elementPrefabs;
+    [SerializeField] private int gridHeight = 5;
+    [SerializeField] private int gridWidth = 5;
+    [SerializeField] private float nodeSize = 1f;
+
+
     private List<BaseNode> nodes = new List<BaseNode>();
 
     public static NodeManager instance;
@@ -20,22 +26,28 @@ public class NodeManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    
 
-    private bool _lateStarted = false;
-
-    void Update()
+    void Start()
     {
-        if (!_lateStarted)
-        {
-            LateStart();
-            _lateStarted = true;
-        }
+        SpawnNodeGrid();
+        FillNodesWithElements();
     }
 
-
-    void LateStart()
+    private void SpawnNodeGrid()
     {
-        FillNodesWithElements();
+        Debug.Log("Spawning Node Grid");
+
+        Vector3 startPosition = transform.position;
+
+        for (int x = 0; x < gridHeight; x++)
+        {
+            for (int z = 0; z < gridWidth; z++)
+            {
+                Vector3 position = startPosition + new Vector3(x * nodeSize, 0, z * nodeSize);
+                Instantiate(nodePrefabs[0], position, Quaternion.identity, transform);
+            }
+        }
     }
 
 
@@ -51,10 +63,10 @@ public class NodeManager : MonoBehaviour
                 continue;
             }
 
-            GameObject gameObject = Instantiate(nodePrefabs[0], node.transform);
+            GameObject elementGameObject = Instantiate(elementPrefabs[0], node.transform);
 
             Debug.Log("spawning element for node " + node.name);
-            BaseElement element = gameObject.GetComponent<BaseElement>();
+            BaseElement element = elementGameObject.GetComponent<BaseElement>();
             if (element != null)
             {
                 element.SetParentNode(node);

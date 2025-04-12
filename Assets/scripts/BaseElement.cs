@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class BaseElement : MonoBehaviour
 {
-    [SerializeField] private float offset = 0.3f; 
     private GameObject prefab;
     
     private BaseNode parentNode;
