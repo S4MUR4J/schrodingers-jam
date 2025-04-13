@@ -8,6 +8,10 @@ namespace Player
     {
         private List<BaseNode> _neighbourNodes;
 
+        
+
+        
+
         public List<BaseNode> NeighbourNodes
         {
             get { return _neighbourNodes; }

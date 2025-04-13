@@ -9,15 +9,11 @@ namespace Player
 {
     public class PlayerType : MonoBehaviour
     {
-
-
         [SerializeField] private string _finishPattern = ":wqa!";
 
         [SerializeField] private PlayerInfo _playerInfo;
 
         private List<char> _typedLetters;
-
-        public static PlayerType Instance { get; private set; }
 
         public string TypeSentence
         {
@@ -39,7 +35,9 @@ namespace Player
             HandlePlayerInput();
             MatchInputWithPattern();
         }
+
         public event EventHandler<PlayerTypeEventArgs> OnPlayerTypeLetter;
+
 
         private void MatchInputWithPattern()
         {
@@ -61,10 +59,13 @@ namespace Player
 
                     matchingNodes.Add(node);
                 }
-                );
+            );
 
             if (!matchingNodes.Any())
             {
+                GameManager.instance.CurrentHealth--;
+
+
                 _typedLetters.Clear();
                 OnPlayerTypeLetter?.Invoke(this, new PlayerTypeEventArgs(""));
             }
@@ -76,15 +77,20 @@ namespace Player
                 var fullRegex = new Regex("^" + Regex.Escape(TypeSentence) + "$");
                 return fullRegex.IsMatch(pattern);
             });
-            if (nodeThatFullRegexMatch == null)
-                return;
 
+            if (nodeThatFullRegexMatch == null)
+            {
+                return;
+            }
+
+            //Sukces rusz gracza
             if (nodeThatFullRegexMatch.HasElement())
             {
                 _typedLetters.Clear();
                 OnPlayerTypeLetter?.Invoke(this, new PlayerTypeEventArgs(""));
                 return;
             }
+
 
             _typedLetters.Clear();
             _playerInfo.SetParentNode(nodeThatFullRegexMatch, true);
@@ -105,8 +111,8 @@ namespace Player
             OnPlayerTypeLetter?.Invoke(this, args);
 
 
-           // Logger.Log("Last pressed key stoke in Player Type: " + lastPressedChar);
-          //  Logger.Log("Current TypeSentence In Player Type: " + TypeSentence);
+            // Logger.Log("Last pressed key stoke in Player Type: " + lastPressedChar);
+            //  Logger.Log("Current TypeSentence In Player Type: " + TypeSentence);
         }
 
         private static char? GetPressedChar()
@@ -121,11 +127,11 @@ namespace Player
 
         public class PlayerTypeEventArgs : EventArgs
         {
-
             public PlayerTypeEventArgs(string currentText)
             {
                 CurrentText = currentText;
             }
+
             public string CurrentText { get; }
         }
     }
