@@ -6,7 +6,7 @@ namespace scriptableObjects
     public class BaseNodeSo : ScriptableObject
     {
         public GameObject prefab;
-        public BaseElementSo elementSo;
+        public GameObject elementPrefab;
         public bool withPattern;
     }
 }

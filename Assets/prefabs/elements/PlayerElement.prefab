@@ -211,5 +211,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1b533c2c7efc4d398bc1481e713ef24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _finishPattern: :wqa!
+  _finishPattern: .
   _playerInfo: {fileID: 5803635981133176173}

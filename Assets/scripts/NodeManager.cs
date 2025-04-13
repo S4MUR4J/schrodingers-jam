@@ -115,12 +115,12 @@ public class NodeManager : MonoBehaviour
 
     private void SpawnElement(BaseNode node, BaseNodeSo nodeSo)
     {
-        if (nodeSo.elementSo == null)
+        if (nodeSo.elementPrefab == null)
         {
             return;
         }
 
-        var elementGameObject = Instantiate(nodeSo.elementSo.prefab, node.transform);
+        var elementGameObject = Instantiate(nodeSo.elementPrefab, node.transform);
         var element = elementGameObject
             .GetComponent<BaseElement>();
         if (element != null)
