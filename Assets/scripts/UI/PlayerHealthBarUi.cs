@@ -17,14 +17,14 @@ namespace UI
             }
 
 
-            _textMeshPro.text = "5/5";
+            _textMeshPro.text = "15 Tries";
 
             GameManager.instance.OnPlayerHealthChanged += HandlePlayerHealthChanged;
         }
 
         private void HandlePlayerHealthChanged(object sender, GameManager.PlayerHealthEventArgs e)
         {
-            _textMeshPro.text = e.Value + "/5";
+            _textMeshPro.text = e.Value + "Tries";
         }
     }
 }
