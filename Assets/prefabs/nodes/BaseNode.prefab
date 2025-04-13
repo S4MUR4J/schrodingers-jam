@@ -202,6 +202,7 @@ MonoBehaviour:
   nodeTopPoint: {fileID: 5536757641009660392}
   _text: {fileID: 3317452366209923354}
   _nodeSo: {fileID: 11400000, guid: 170b0d382b7d841b0a8637141385cfae, type: 2}
+  _canvas: {fileID: 5219941264148211231}
   pattern: 
 --- !u!1 &3768110226939486950
 GameObject:

@@ -35,14 +35,14 @@ public class BaseElement : MonoBehaviour
     {
         if (newNode is EndNode endNode)
         {
-            EndNodeSo endNodeSo = (EndNodeSo)newNode.GetNodeSo();
+            var endNodeSo = (EndNodeSo)newNode.GetNodeSo();
 
             NodeManager.instance.LoadNextLevel(endNodeSo.nextLevelSo);
         }
 
         if (parentNode != null)
         {
-            parentNode.ClearElement();
+            parentNode.ClearElement(hide);
         }
 
         if (newNode.HasElement())

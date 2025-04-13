@@ -10,6 +10,7 @@ public class BaseNode : MonoBehaviour
     [SerializeField] private Transform nodeTopPoint;
     [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private BaseNodeSo _nodeSo;
+    [SerializeField] private GameObject _canvas;
     public string pattern;
 
     private List<string> _allPatterns;
@@ -44,8 +45,9 @@ public class BaseNode : MonoBehaviour
         }
 
         _element = newElement;
-        if (hide)
-            _text.text = string.Empty;
+        if (_canvas != null)
+            _canvas.SetActive(!hide);
+
         newElement.transform.parent = nodeTopPoint;
     }
 
@@ -54,9 +56,11 @@ public class BaseNode : MonoBehaviour
         return _element;
     }
 
-    public void ClearElement()
+    public void ClearElement(bool hide = false)
     {
         _element = null;
+        if (_canvas != null)
+            _canvas.SetActive(hide);
     }
 
     public bool HasElement()
