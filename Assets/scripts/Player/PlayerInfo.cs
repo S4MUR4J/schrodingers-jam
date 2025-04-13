@@ -58,7 +58,7 @@ namespace Player
 
             var neighbourNodesFiltered = NodeManager.instance.GetNeighbors(parentNode)
                 .Where(node => node.pattern != null).ToList();
-            neighbourNodesFiltered.ForEach(node => Logger.Log("Pattern to match: " + node.pattern));
+           // neighbourNodesFiltered.ForEach(node => Logger.Log("Pattern to match: " + node.pattern));
 
             return neighbourNodesFiltered;
         }

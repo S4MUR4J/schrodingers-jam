@@ -34,10 +34,11 @@ public class GameManager : MonoBehaviour
 
     public void LoadLevel(BaseLevelSo level)
     {
-        Debug.LogWarning("Game Manager Loading Level: " + level.name);
+       
 
         NodeManager.instance.ClearLevel();
         NodeManager.instance.LoadLevel(level);
+        Player.GetComponent<PlayerInfo>().UpdateNeighbourNodes();
         OnLevelLoad?.Invoke(this, EventArgs.Empty);
     }
 

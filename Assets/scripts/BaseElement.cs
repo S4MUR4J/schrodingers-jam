@@ -33,13 +33,7 @@ public class BaseElement : MonoBehaviour
 
     public void SetParentNode(BaseNode newNode, bool hide = false)
     {
-        // if (newNode is EndNode endNode)
-        // {
-        //     EndNodeSo endNodeSo = endNode.GetEndNodeSo();
-        //
-        //     Debug.LogWarning("Tropka found loading next level: " + endNodeSo.nextLevelSo.name);
-        //     GameManager.instance.LoadLevel(endNodeSo.nextLevelSo);
-        // }
+        
 
         if (parentNode != null)
         {

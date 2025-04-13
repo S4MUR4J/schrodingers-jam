@@ -103,7 +103,10 @@ namespace Player
 
             var args = new PlayerTypeEventArgs(TypeSentence);
             OnPlayerTypeLetter?.Invoke(this, args);
-            
+
+
+           // Logger.Log("Last pressed key stoke in Player Type: " + lastPressedChar);
+          //  Logger.Log("Current TypeSentence In Player Type: " + TypeSentence);
         }
 
         private static char? GetPressedChar()

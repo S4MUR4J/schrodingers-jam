@@ -15,7 +15,7 @@ public class EndNode : BaseNode
         base.SetElement(newElement, movePlayer);
 
 
-        NodeManager.instance.LoadLevel(_endNodeSo.nextLevelSo);
+        GameManager.instance.LoadLevel(_endNodeSo.nextLevelSo);
     }
 
     public EndNodeSo GetEndNodeSo()

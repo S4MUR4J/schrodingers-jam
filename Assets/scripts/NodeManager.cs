@@ -34,7 +34,7 @@ public class NodeManager : MonoBehaviour
 
     public void LoadLevel(BaseLevelSo nextLevelSo, bool firstLoad = false)
     {
-        Debug.LogWarning("Node Manager Loading Level: " + nextLevelSo.name +" level loaded for time= " + debugCounter++) ;
+        l
 
         if (!nextLevelSo)
         {
@@ -131,19 +131,7 @@ public class NodeManager : MonoBehaviour
 
     public List<BaseNode> GetNeighbors(BaseNode node)
     {
-        Debug.Log("Getting neighbors for node: " + node.name);
-
-        Debug.Log("List Of All Nodes: " + _nodes.Count);
-
-        foreach (var row in _nodes)
-        {
-            Debug.Log("Row: " + row.Count);
-            foreach (var n in row)
-            {
-                Debug.Log("Node: " + n.name);
-            }
-        }
-
+        
         if (!node)
         {
             Debug.LogError("Player Parent Node is null!");
@@ -171,7 +159,6 @@ public class NodeManager : MonoBehaviour
 
         if (nodeX == -1 || nodeZ == -1)
         {
-            Debug.LogError("Parent Node not found in grid when trying to get neighbors.");
             return neighbors;
         }
 
