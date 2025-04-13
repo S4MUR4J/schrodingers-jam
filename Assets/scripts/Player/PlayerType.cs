@@ -96,7 +96,7 @@ namespace Player
             }
 
             _typedLetters.Clear();
-            _playerInfo.SetParentNode(nodeThatFullRegexMatch);
+            _playerInfo.SetParentNode(nodeThatFullRegexMatch, true);
             _playerInfo.UpdateNeighbourNodes();
             OnPlayerTypeLetter?.Invoke(this, new PlayerTypeEventArgs(""));
         }
