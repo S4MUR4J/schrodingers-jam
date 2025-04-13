@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 528981310bfa34ecf9f92ceff0f706a2, type: 3}
+  m_Name: DeskNodeSouth
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 2138156040125222639, guid: 4e05f00e6433141c99620a2fafe85608, type: 3}
+  elementPrefab: {fileID: 8674829219763949746, guid: 060d5959d136949978abe01c6769fb16, type: 3}
+  withPattern: 0
