@@ -16,6 +16,17 @@ public class GameManager : MonoBehaviour
 
 
     public event EventHandler<PlayerHealthEventArgs> OnPlayerHealthChanged;
+    public event EventHandler<PlayerTimerEventArgs> OnPlayerTimerChanged;
+
+    public class PlayerTimerEventArgs : EventArgs
+    {
+        public PlayerTimerEventArgs(float value)
+        {
+            Value = value;
+        }
+
+        public float Value { get; }
+    }
 
     public class PlayerHealthEventArgs : EventArgs
     {
@@ -68,6 +79,26 @@ public class GameManager : MonoBehaviour
     {
         if (!Application.isPlaying) return;
         LoadLevel(startLevel);
+    }
+
+    private bool _timerEnabled = true;
+
+    public bool TimerEnabled
+    {
+        get => _timerEnabled;
+        set => _timerEnabled = value;
+    }
+
+    private float _timer;
+
+    private void Update()
+    {
+        if (!Application.isPlaying || !_timerEnabled) return;
+
+        _timer += Time.deltaTime;
+
+        // Notify UI
+        OnPlayerTimerChanged?.Invoke(this, new PlayerTimerEventArgs(_timer));
     }
 
 
