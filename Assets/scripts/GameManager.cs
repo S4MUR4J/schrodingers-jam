@@ -28,14 +28,13 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        if (!Application.isPlaying) return;
         LoadLevel(startLevel);
     }
 
 
     public void LoadLevel(BaseLevelSo level)
     {
-       
-
         NodeManager.instance.ClearLevel();
         NodeManager.instance.LoadLevel(level);
         Player.GetComponent<PlayerInfo>().UpdateNeighbourNodes();

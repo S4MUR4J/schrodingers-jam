@@ -2,11 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using levelsSO;
 using scriptableObjects;
+using UnityEditor;
 using UnityEngine;
 
 public class NodeManager : MonoBehaviour
 {
     public static NodeManager instance;
+    public LevelDatabase levelDatabase;
 
 
     [SerializeField] private float nodeSize = 1f;
@@ -34,7 +36,6 @@ public class NodeManager : MonoBehaviour
 
     public void LoadLevel(BaseLevelSo nextLevelSo, bool firstLoad = false)
     {
-        
         if (!nextLevelSo)
         {
             //brak następnego poziomu zakładam, że to oznacza ostatni poziom i koniec gry
@@ -46,12 +47,47 @@ public class NodeManager : MonoBehaviour
 
     public void ClearLevel()
     {
+        if (_nodes == null)
+        {
+            _nodes = new List<List<BaseNode>>();
+            return;
+        }
+
         foreach (var node in _nodes.SelectMany(row => row))
         {
+            if (node == null) continue;
+
             node.DestroySelf();
         }
 
         _nodes.Clear();
+    }
+
+    public void ClearLevelInEditor()
+    {
+#if UNITY_EDITOR
+        if (!Application.isEditor || Application.isPlaying) return;
+
+        if (_nodes == null)
+        {
+            _nodes = new List<List<BaseNode>>();
+            return;
+        }
+
+        foreach (var node in _nodes.SelectMany(row => row))
+        {
+            if (node == null)
+            {
+                continue;
+            }
+
+            node.DestroySelfInEditor();
+        }
+
+        _nodes.Clear();
+        UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(gameObject.scene);
+        EditorUtility.SetDirty(this);
+#endif
     }
 
     private void SpawnNodeGrid(BaseLevelSo spawnedLevelSo)
@@ -130,7 +166,6 @@ public class NodeManager : MonoBehaviour
 
     public List<BaseNode> GetNeighbors(BaseNode node)
     {
-        
         if (!node)
         {
             Debug.LogError("Player Parent Node is null!");
