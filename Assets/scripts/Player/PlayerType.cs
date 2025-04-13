@@ -11,13 +11,13 @@ namespace Player
     {
 
 
-        [SerializeField] private string _finishPattern = ":wqa";
+        [SerializeField] private string _finishPattern = ":wqa!";
 
         [SerializeField] private PlayerInfo _playerInfo;
 
         private List<char> _typedLetters;
 
-        public static PlayerType instance { get; private set; }
+        public static PlayerType Instance { get; private set; }
 
         public string TypeSentence
         {
@@ -31,9 +31,9 @@ namespace Player
 
         private void Awake()
         {
-            if (instance == null)
+            if (Instance == null)
             {
-                instance = this;
+                Instance = this;
             }
             else
             {
@@ -60,7 +60,7 @@ namespace Player
                     if (node.pattern == null)
                         return;
 
-                    var pattern = (node.pattern + _finishPattern).ToUpper();
+                    var pattern = node.pattern + _finishPattern;
                     var typedSentence = TypeSentence;
 
                     var partRegex = new Regex("^" + Regex.Escape(pattern.Substring(0,
@@ -79,10 +79,9 @@ namespace Player
             }
 
 
-            //Logger.Log("Current players input: " + TypeSentence);
             var nodeThatFullRegexMatch = nodes.FirstOrDefault(node =>
             {
-                var pattern = (node.pattern + _finishPattern).ToUpper();
+                var pattern = node.pattern + _finishPattern;
                 var fullRegex = new Regex("^" + Regex.Escape(TypeSentence) + "$");
                 return fullRegex.IsMatch(pattern);
             });
@@ -121,14 +120,10 @@ namespace Player
 
         private static char? GetPressedChar()
         {
-            var codeValues = Enum.GetValues(typeof(KeyCode));
-            foreach (KeyCode keyCode in codeValues)
-            {
-                if (!Input.GetKeyDown(keyCode))
-                    continue;
+            var input = Input.inputString;
 
-                return keyCode.ToString()[0];
-            }
+            if (!string.IsNullOrEmpty(input))
+                return input[0];
 
             return null;
         }
