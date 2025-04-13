@@ -558,6 +558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startLevel: {fileID: 11400000, guid: fa3459f27f69b4cc5878cf1fe252d9da, type: 2}
+  level: {fileID: 11400000, guid: fa3459f27f69b4cc5878cf1fe252d9da, type: 2}
   nodeSize: 1
 --- !u!4 &1029070602
 Transform:
