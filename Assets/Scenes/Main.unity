@@ -1700,7 +1700,7 @@ PrefabInstance:
     - target: {fileID: 20732991058096062, guid: 79fa58801a2c3418cb1f371b800c8db1, type: 3}
       propertyPath: startLevel
       value: 
-      objectReference: {fileID: 11400000, guid: 5b163a4b48d73447a83ce57a17380316, type: 2}
+      objectReference: {fileID: 11400000, guid: f78aafdf929db4840b17015e051e189e, type: 2}
     - target: {fileID: 549481926398298083, guid: 79fa58801a2c3418cb1f371b800c8db1, type: 3}
       propertyPath: m_Name
       value: GameManager
