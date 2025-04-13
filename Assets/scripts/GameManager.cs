@@ -14,6 +14,41 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private BaseLevelSo startLevel;
 
+
+    public event EventHandler<PlayerHealthEventArgs> OnPlayerHealthChanged;
+
+    public class PlayerHealthEventArgs : EventArgs
+    {
+        public PlayerHealthEventArgs(int value)
+        {
+            Value = value;
+        }
+
+        public int Value { get; }
+    }
+
+
+    [SerializeField] private int maxHealth = 5;
+
+    private int _currentHealth;
+
+    public int CurrentHealth
+    {
+        get => _currentHealth;
+        set
+        {
+            _currentHealth = value;
+            OnPlayerHealthChanged?.Invoke(this, new PlayerHealthEventArgs(value));
+
+            Debug.LogWarning("Health changed to: " + value);
+
+            if (_currentHealth <= 0)
+            {
+                QuitGame();
+            }
+        }
+    }
+
     private void Awake()
     {
         if (instance == null)
@@ -24,6 +59,9 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        CurrentHealth = maxHealth;
+        Debug.LogWarning("Starting health: " + CurrentHealth);
     }
 
     private void Start()
