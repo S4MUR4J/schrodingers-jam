@@ -34,8 +34,7 @@ public class NodeManager : MonoBehaviour
 
     public void LoadLevel(BaseLevelSo nextLevelSo, bool firstLoad = false)
     {
-        l
-
+        
         if (!nextLevelSo)
         {
             //brak następnego poziomu zakładam, że to oznacza ostatni poziom i koniec gry
