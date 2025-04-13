@@ -12,13 +12,9 @@ public class NodeManager : MonoBehaviour
 
 
     [SerializeField] private float nodeSize = 1f;
-
-
+    
     private List<List<BaseNode>> _nodes;
-
-    private int debugCounter = 0;
-
-
+    
     private void Awake()
     {
         if (instance == null)

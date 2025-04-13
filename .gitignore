@@ -74,3 +74,6 @@ crashlytics-build.properties
 /Assets/TextMesh Pro
 Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset
 /Assets/TextMesh Pro
+Assets/.DS_Store
+Assets/prefabs/.DS_Store
+.DS_Store
