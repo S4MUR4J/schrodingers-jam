@@ -835,8 +835,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 150}
-  m_SizeDelta: {x: -80, y: -500}
+  m_AnchoredPosition: {x: 0, y: 125}
+  m_SizeDelta: {x: -80, y: -550}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1630306032
 MonoBehaviour:
@@ -858,7 +858,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: :WQA!
+  m_text: SpeedType University
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1969c106e582043b6a34872456e881fc, type: 2}
   m_sharedMaterial: {fileID: -6664341123034762866, guid: 1969c106e582043b6a34872456e881fc, type: 2}
@@ -885,13 +885,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
-  m_fontSizeBase: 72
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 21
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535

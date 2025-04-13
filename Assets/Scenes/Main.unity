@@ -2000,6 +2000,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 20732991058096062, guid: 79fa58801a2c3418cb1f371b800c8db1, type: 3}
+      propertyPath: maxHealth
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 20732991058096062, guid: 79fa58801a2c3418cb1f371b800c8db1, type: 3}
       propertyPath: startLevel
       value: 
       objectReference: {fileID: 11400000, guid: f78aafdf929db4840b17015e051e189e, type: 2}
