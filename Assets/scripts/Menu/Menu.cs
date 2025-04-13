@@ -10,6 +10,11 @@ namespace Menu
             SceneManager.LoadScene("Main");
         }
 
+        public void GoToMenu()
+        {
+            SceneManager.LoadScene("Menu");
+        }
+
         public void QuitGame()
         {
             Application.Quit();
