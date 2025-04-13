@@ -17,7 +17,7 @@ public class BaseNode : MonoBehaviour
     private BaseElement _element;
 
 
-    private void Awake()
+    public void Awake()
     {
         _allPatterns = new List<string>();
 
@@ -35,6 +35,8 @@ public class BaseNode : MonoBehaviour
         }
 
     }
+    
+   
 
     public virtual void SetElement(BaseElement newElement, bool hide = false)
     {

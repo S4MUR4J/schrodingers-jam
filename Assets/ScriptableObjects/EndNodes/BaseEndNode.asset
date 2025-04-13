@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 3038656675337776515, guid: 785197c88dca9447c921a2473d5d0acc, type: 3}
   elementSo: {fileID: 0}
+  withPattern: 1
   nextLevelSo: {fileID: 11400000, guid: fa3459f27f69b4cc5878cf1fe252d9da, type: 2}

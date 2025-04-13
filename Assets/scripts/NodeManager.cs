@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class NodeManager : MonoBehaviour
 {
-
     public static NodeManager instance;
 
     [SerializeField] private BaseLevelSo startLevel;
@@ -40,39 +39,39 @@ public class NodeManager : MonoBehaviour
 
     public void LoadNextLevel(BaseLevelSo nextLevelSo, bool firstLoad = false)
     {
-        if (!firstLoad)
-        {
-            foreach (var node in _nodes.SelectMany(row => row))
-            {
-                Destroy(node.gameObject);
-            }
-
-            _nodes.Clear();
-        }
-
         if (!nextLevelSo)
         {
             //brak następnego poziomu zakładam, że to oznacza ostatni poziom i koniec gry
-            QuitGame();
+            GameManager.instance.QuitGame();
         }
 
         SpawnNodeGrid(nextLevelSo);
     }
 
-    private void SpawnNodeGrid(BaseLevelSo level)
+    public void ClearLevel()
     {
-        var gridHeight = level.nodes.Count;
+        foreach (var node in _nodes.SelectMany(row => row))
+        {
+            Destroy(node.gameObject);
+        }
+
+        _nodes.Clear();
+    }
+
+    private void SpawnNodeGrid(BaseLevelSo spawnedLevelSo)
+    {
+        var gridHeight = spawnedLevelSo.nodes.Count;
 
         var startPosition = transform.position;
 
         for (var x = 0; x < gridHeight; x++)
         {
             var rowList = new List<BaseNode>();
-            var gridWidth = level.nodes[x].row.Count;
+            var gridWidth = spawnedLevelSo.nodes[x].row.Count;
 
             for (var z = 0; z < gridWidth; z++)
             {
-                var nodeSo = level.nodes[x].row[z];
+                var nodeSo = spawnedLevelSo.nodes[x].row[z];
 
                 if (!nodeSo)
                 {
@@ -171,17 +170,5 @@ public class NodeManager : MonoBehaviour
             neighbors.Add(_nodes[nodeX][nodeZ + 1]);
 
         return neighbors;
-    }
-
-
-    private static void QuitGame()
-    {
-#if UNITY_EDITOR
-        // If running in the Unity Editor, stop the play mode
-        EditorApplication.isPlaying = false;
-#else
-        // If in a build, quit the application
-        Application.Quit();
-#endif
     }
 }

@@ -5,8 +5,9 @@ public class EndNode : BaseNode
 {
     private EndNodeSo _endNodeSo;
 
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         _endNodeSo = (EndNodeSo)GetNodeSo();
     }
 
