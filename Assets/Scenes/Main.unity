@@ -826,6 +826,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4931747287967690953, guid: 9518ab9b0c6c7471f83764d6a644631d, type: 3}
+      propertyPath: levelDatabase
+      value: 
+      objectReference: {fileID: 11400000, guid: 4258e781d33d14834970cb7fd295f343, type: 2}
     - target: {fileID: 5460450953802213793, guid: 9518ab9b0c6c7471f83764d6a644631d, type: 3}
       propertyPath: m_Name
       value: NodeManager

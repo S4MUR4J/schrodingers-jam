@@ -88,4 +88,19 @@ public class BaseNode : MonoBehaviour
 
         Destroy(gameObject);
     }
+
+    public void DestroySelfInEditor()
+    {
+        // Destroy immediately in Editor context
+        if (!Application.isEditor || Application.isPlaying)
+        {
+            return;
+        }
+        if (_element)
+        {
+            _element.DestroySelfInEditor();
+        }
+        DestroyImmediate(gameObject);
+
+    }
 }

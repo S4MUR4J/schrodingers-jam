@@ -33,8 +33,6 @@ public class BaseElement : MonoBehaviour
 
     public void SetParentNode(BaseNode newNode, bool hide = false)
     {
-        
-
         if (parentNode != null)
         {
             parentNode.ClearElement(hide);
@@ -64,5 +62,16 @@ public class BaseElement : MonoBehaviour
     {
         parentNode.ClearElement();
         Destroy(gameObject);
+    }
+
+    public void DestroySelfInEditor()
+    {
+        if (!Application.isEditor || Application.isPlaying)
+        {
+            return;
+        }
+
+        parentNode.ClearElement();
+        DestroyImmediate(gameObject);
     }
 }
