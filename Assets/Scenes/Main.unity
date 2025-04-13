@@ -667,8 +667,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Comic sans enjoyers
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f93d31b7a66264768827b7b331446cbc, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: f93d31b7a66264768827b7b331446cbc, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1969c106e582043b6a34872456e881fc, type: 2}
+  m_sharedMaterial: {fileID: -6664341123034762866, guid: 1969c106e582043b6a34872456e881fc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
