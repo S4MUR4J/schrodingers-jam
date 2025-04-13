@@ -768,7 +768,7 @@ PrefabInstance:
     - target: {fileID: 20732991058096062, guid: 79fa58801a2c3418cb1f371b800c8db1, type: 3}
       propertyPath: startLevel
       value: 
-      objectReference: {fileID: 11400000, guid: 0bc8119b170d1425aba77c18d8595880, type: 2}
+      objectReference: {fileID: 11400000, guid: 5b163a4b48d73447a83ce57a17380316, type: 2}
     - target: {fileID: 549481926398298083, guid: 79fa58801a2c3418cb1f371b800c8db1, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -829,7 +829,7 @@ PrefabInstance:
     - target: {fileID: 4931747287967690953, guid: 9518ab9b0c6c7471f83764d6a644631d, type: 3}
       propertyPath: levelDatabase
       value: 
-      objectReference: {fileID: 11400000, guid: 4258e781d33d14834970cb7fd295f343, type: 2}
+      objectReference: {fileID: 11400000, guid: 7cc57ed2924134e22b2e1e466a3e0480, type: 2}
     - target: {fileID: 5460450953802213793, guid: 9518ab9b0c6c7471f83764d6a644631d, type: 3}
       propertyPath: m_Name
       value: NodeManager
