@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Utils
 {
     public static class Constants
     {
-        public static readonly List<string> Words = new List<string>
+        private static readonly List<string> Words = new List<string>
         {
             "balance", "journey", "freedom", "charity", "glacier", "diamond", "kingdom", "machine",
             "monitor", "natural", "recycle", "morning", "picture", "reality", "history", "fantasy",
@@ -31,5 +32,10 @@ namespace Utils
             "urgency", "variety", "whistle", "zealots", "ability", "brutals", "carrier", "dolphin",
             "elegant", "forests", "generic", "harmony", "imagine", "journey", "kissing", "logical"
         };
+
+        public static string GetWord()
+        {
+            return Words[Random.Range(0, Words.Count - 1)];
+        }
     }
 }

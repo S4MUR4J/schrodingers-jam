@@ -22,7 +22,7 @@ namespace UI
                 return;
             }
 
-            PlayerType.instance.OnPlayerTypeLetter += HandlePlayerTyped;
+            PlayerType.Instance.OnPlayerTypeLetter += HandlePlayerTyped;
         }
 
 
