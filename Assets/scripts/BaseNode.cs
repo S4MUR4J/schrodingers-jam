@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using scriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -10,18 +12,30 @@ public class BaseNode : MonoBehaviour
     [SerializeField] private BaseNodeSo _nodeSo;
     public string pattern;
 
+    private List<string> _allPatterns;
     private BaseElement _element;
 
 
     private void Awake()
     {
-        pattern = Constants.Words[Random.Range(0, Constants.Words.Count - 1)];
+        _allPatterns = new List<string>();
+
+        var newPattern = Constants.GetWord();
+        while (_allPatterns.Any(p => p == newPattern))
+        {
+            newPattern = Constants.GetWord();
+        }
 
         if (_nodeSo.withPattern)
-            _text.text = pattern;
+        {
+            pattern = newPattern;
+            _text.text = newPattern;
+            _allPatterns.Add(newPattern);
+        }
+
     }
 
-    public void SetElement(BaseElement newElement, bool movePlayer = false)
+    public virtual void SetElement(BaseElement newElement, bool hide = false)
     {
         if (newElement == null)
         {
@@ -30,7 +44,7 @@ public class BaseNode : MonoBehaviour
         }
 
         _element = newElement;
-        if (!movePlayer)
+        if (hide)
             _text.text = string.Empty;
         newElement.transform.parent = nodeTopPoint;
     }
@@ -53,5 +67,10 @@ public class BaseNode : MonoBehaviour
     public Transform GetNodeTopPoint()
     {
         return nodeTopPoint;
+    }
+
+    public BaseNodeSo GetNodeSo()
+    {
+        return _nodeSo;
     }
 }

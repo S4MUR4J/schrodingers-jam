@@ -1,18 +1,23 @@
 using System.Collections.Generic;
+using System.Linq;
 using levelsSO;
 using scriptableObjects;
+using UnityEditor;
 using UnityEngine;
 
 public class NodeManager : MonoBehaviour
 {
 
     public static NodeManager instance;
+
+    [SerializeField] private BaseLevelSo startLevel;
     [SerializeField] private BaseLevelSo level;
 
     [SerializeField] private float nodeSize = 1f;
 
 
     private List<List<BaseNode>> _nodes;
+
 
     private void Awake()
     {
@@ -30,13 +35,32 @@ public class NodeManager : MonoBehaviour
     private void Start()
     {
         _nodes = new List<List<BaseNode>>();
-        SpawnNodeGrid();
+        LoadNextLevel(startLevel, true);
     }
 
-    private void SpawnNodeGrid()
+    public void LoadNextLevel(BaseLevelSo nextLevelSo, bool firstLoad = false)
     {
+        if (!firstLoad)
+        {
+            foreach (var node in _nodes.SelectMany(row => row))
+            {
+                Destroy(node.gameObject);
+            }
 
+            _nodes.Clear();
+        }
 
+        if (!nextLevelSo)
+        {
+            //brak następnego poziomu zakładam, że to oznacza ostatni poziom i koniec gry
+            QuitGame();
+        }
+
+        SpawnNodeGrid(nextLevelSo);
+    }
+
+    private void SpawnNodeGrid(BaseLevelSo level)
+    {
         var gridHeight = level.nodes.Count;
 
         var startPosition = transform.position;
@@ -50,20 +74,21 @@ public class NodeManager : MonoBehaviour
             {
                 var nodeSo = level.nodes[x].row[z];
 
-                if (nodeSo == null)
+                if (!nodeSo)
                 {
                     continue;
                 }
 
                 var node = SpawnNode(nodeSo, startPosition, x, z, rowList);
 
-                if (node == null)
+                if (!node)
                 {
                     continue;
                 }
 
                 SpawnElement(node, nodeSo);
             }
+
             _nodes.Add(rowList);
         }
     }
@@ -100,7 +125,7 @@ public class NodeManager : MonoBehaviour
             .GetComponent<BaseElement>();
         if (element != null)
         {
-            element.SetParentNode(node);
+            element.SetParentNode(node, nodeSo.withPattern);
         }
         else
         {
@@ -146,5 +171,17 @@ public class NodeManager : MonoBehaviour
             neighbors.Add(_nodes[nodeX][nodeZ + 1]);
 
         return neighbors;
+    }
+
+
+    private static void QuitGame()
+    {
+#if UNITY_EDITOR
+        // If running in the Unity Editor, stop the play mode
+        EditorApplication.isPlaying = false;
+#else
+        // If in a build, quit the application
+        Application.Quit();
+#endif
     }
 }

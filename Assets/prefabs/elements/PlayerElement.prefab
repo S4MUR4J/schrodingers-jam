@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6585b7deeec4d15a857ed03aa6bdf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elementSo: {fileID: 11400000, guid: 315bf7cef9e2b4323a296b7898f2e3d6, type: 2}
+  lerpSpeed: 5
 --- !u!114 &5693354025971380555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,5 +211,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1b533c2c7efc4d398bc1481e713ef24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _finishPattern: w
+  _finishPattern: :wqa!
   _playerInfo: {fileID: 5803635981133176173}

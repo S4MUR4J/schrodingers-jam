@@ -9,24 +9,15 @@ namespace Player
 {
     public class PlayerType : MonoBehaviour
     {
-        
-        public static PlayerType instance { get; private set; }
-        public event EventHandler<PlayerTypeEventArgs> OnPlayerTypeLetter;
-
-        public class PlayerTypeEventArgs : EventArgs
-        {
-            public string CurrentText { get; }
-
-            public PlayerTypeEventArgs(string currentText)
-            {
-                CurrentText = currentText;
-            }
-        }
 
 
-        [SerializeField] private string _finishPattern = ":wqa";
+        [SerializeField] private string _finishPattern = ":wqa!";
 
         [SerializeField] private PlayerInfo _playerInfo;
+
+        private List<char> _typedLetters;
+
+        public static PlayerType Instance { get; private set; }
 
         public string TypeSentence
         {
@@ -37,20 +28,18 @@ namespace Player
             }
         }
 
-        private List<char> _typedLetters;
-
 
         private void Awake()
         {
-            if (instance == null)
+            if (Instance == null)
             {
-                instance = this;
+                Instance = this;
             }
             else
             {
                 Debug.LogError("PlayerInfo instance already exist!");
             }
-            
+
             _typedLetters = new List<char>();
         }
 
@@ -59,6 +48,7 @@ namespace Player
             HandlePlayerInput();
             MatchInputWithPattern();
         }
+        public event EventHandler<PlayerTypeEventArgs> OnPlayerTypeLetter;
 
         private void MatchInputWithPattern()
         {
@@ -70,16 +60,16 @@ namespace Player
                     if (node.pattern == null)
                         return;
 
-                    var pattern = (node.pattern + _finishPattern).ToUpper();
+                    var pattern = node.pattern + _finishPattern;
                     var typedSentence = TypeSentence;
 
-                    var partRegex = new Regex("^" + Regex.Escape(pattern.Substring(startIndex: 0,
-                        length: Math.Min(typedSentence.Length, pattern.Length))) + "$");
+                    var partRegex = new Regex("^" + Regex.Escape(pattern.Substring(0,
+                        Math.Min(typedSentence.Length, pattern.Length))) + "$");
                     if (!partRegex.IsMatch(typedSentence))
                         return;
 
                     matchingNodes.Add(node);
-                } 
+                }
                 );
 
             if (!matchingNodes.Any())
@@ -87,13 +77,11 @@ namespace Player
                 _typedLetters.Clear();
                 OnPlayerTypeLetter?.Invoke(this, new PlayerTypeEventArgs(""));
             }
-                
 
 
-            //Logger.Log("Current players input: " + TypeSentence);
             var nodeThatFullRegexMatch = nodes.FirstOrDefault(node =>
             {
-                var pattern = (node.pattern + _finishPattern).ToUpper();
+                var pattern = node.pattern + _finishPattern;
                 var fullRegex = new Regex("^" + Regex.Escape(TypeSentence) + "$");
                 return fullRegex.IsMatch(pattern);
             });
@@ -108,7 +96,7 @@ namespace Player
             }
 
             _typedLetters.Clear();
-            _playerInfo.SetParentNode(nodeThatFullRegexMatch, true);
+            _playerInfo.SetParentNode(nodeThatFullRegexMatch);
             _playerInfo.UpdateNeighbourNodes();
             OnPlayerTypeLetter?.Invoke(this, new PlayerTypeEventArgs(""));
         }
@@ -124,24 +112,30 @@ namespace Player
 
             var args = new PlayerTypeEventArgs(TypeSentence);
             OnPlayerTypeLetter?.Invoke(this, args);
-            
-            
+
+
             Logger.Log("Last pressed key stoke in Player Type: " + lastPressedChar);
             Logger.Log("Current TypeSentence In Player Type: " + TypeSentence);
         }
 
         private static char? GetPressedChar()
         {
-            var codeValues = Enum.GetValues(typeof(KeyCode));
-            foreach (KeyCode keyCode in codeValues)
-            {
-                if (!Input.GetKeyDown(keyCode))
-                    continue;
+            var input = Input.inputString;
 
-                return keyCode.ToString()[0];
-            }
+            if (!string.IsNullOrEmpty(input))
+                return input[0];
 
             return null;
+        }
+
+        public class PlayerTypeEventArgs : EventArgs
+        {
+
+            public PlayerTypeEventArgs(string currentText)
+            {
+                CurrentText = currentText;
+            }
+            public string CurrentText { get; }
         }
     }
 }
