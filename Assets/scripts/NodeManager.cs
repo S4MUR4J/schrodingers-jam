@@ -8,8 +8,7 @@ using UnityEngine;
 public class NodeManager : MonoBehaviour
 {
     public static NodeManager instance;
-    
- 
+
 
     [SerializeField] private float nodeSize = 1f;
 
@@ -27,12 +26,10 @@ public class NodeManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+
         _nodes = new List<List<BaseNode>>();
-        
     }
 
-    
 
     public void LoadLevel(BaseLevelSo nextLevelSo, bool firstLoad = false)
     {
@@ -131,10 +128,29 @@ public class NodeManager : MonoBehaviour
 
     public List<BaseNode> GetNeighbors(BaseNode node)
     {
+        Debug.Log("Getting neighbors for node: " + node.name);
+
+        Debug.Log("List Of All Nodes: " + _nodes.Count);
+        foreach (var row in _nodes)
+        {
+            Debug.Log("Row: " + row.Count);
+            foreach (var n in row)
+            {
+                Debug.Log("Node: " + n.name);
+            }
+        }
+
+        if (!node)
+        {
+            Debug.LogError("Player Parent Node is null!");
+            return new List<BaseNode>();
+        }
+
         var neighbors = new List<BaseNode>();
 
         // Find node's position in grid
         int nodeX = -1, nodeZ = -1;
+
 
         for (var x = 0; x < _nodes.Count; x++)
         {
@@ -149,20 +165,25 @@ public class NodeManager : MonoBehaviour
             if (nodeX != -1) break;
         }
 
-        // Check for neighbors in the 4 possible directions
+        if (nodeX == -1 || nodeZ == -1)
+        {
+            Debug.LogError("Parent Node not found in grid when trying to get neighbors.");
+            return neighbors;
+        }
+
         // Up
-        if (nodeX > 0)
+        if (nodeX > 0 && nodeZ < _nodes[nodeX - 1].Count)
             neighbors.Add(_nodes[nodeX - 1][nodeZ]);
 
-        // Down
-        if (nodeX < _nodes.Count - 1)
+// Down
+        if (nodeX < _nodes.Count - 1 && nodeZ < _nodes[nodeX + 1].Count)
             neighbors.Add(_nodes[nodeX + 1][nodeZ]);
 
-        // Left
+// Left
         if (nodeZ > 0)
             neighbors.Add(_nodes[nodeX][nodeZ - 1]);
 
-        // Right
+// Right
         if (nodeZ < _nodes[nodeX].Count - 1)
             neighbors.Add(_nodes[nodeX][nodeZ + 1]);
 

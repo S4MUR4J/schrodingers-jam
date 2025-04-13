@@ -1,5 +1,6 @@
 using System;
 using levelsSO;
+using Player;
 using UnityEditor;
 using UnityEngine;
 

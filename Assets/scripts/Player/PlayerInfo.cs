@@ -44,12 +44,18 @@ namespace Player
 
         public void UpdateNeighbourNodes()
         {
-            NeighbourNodes.Clear();
+            NeighbourNodes = new List<BaseNode>();
             NeighbourNodes.AddRange(GetNeighbourNodes());
         }
 
         private List<BaseNode> GetNeighbourNodes()
         {
+            if (parentNode == null)
+            {
+                Debug.LogError("Player's parentNode is null!");
+                return new List<BaseNode>();
+            }
+            
             var neighbourNodesFiltered = NodeManager.instance.GetNeighbors(parentNode)
                 .Where(node => node.pattern != null).ToList();
             neighbourNodesFiltered.ForEach(node => Logger.Log("Pattern to match: " + node.pattern));
