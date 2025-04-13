@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,14 +8,17 @@ namespace Player
 {
     public class PlayerInfo : BaseElement
     {
-
-
         private List<BaseNode> _neighbourNodes;
 
         public List<BaseNode> NeighbourNodes
         {
             get { return _neighbourNodes; }
             private set { _neighbourNodes = value; }
+        }
+
+        private void Awake()
+        {
+            GameManager.instance.Player = gameObject;
         }
 
         private void Start()

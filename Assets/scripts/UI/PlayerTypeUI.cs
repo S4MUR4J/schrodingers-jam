@@ -30,7 +30,16 @@ namespace UI
 
         private void HandleLevelLoad(object sender, EventArgs e)
         {
-            var playerType = GameManager.instance.Player.GetComponent<PlayerType>();
+            var playerObject = GameManager.instance.Player;
+
+            if (playerObject == null)
+            {
+                Debug.LogError("Player object not found in GameManager!");
+                return;
+            }
+
+            var playerType = playerObject.GetComponent<PlayerType>();
+
             if (playerType == null)
             {
                 Debug.LogError("PlayerType component not found on Player!");
