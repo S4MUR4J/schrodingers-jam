@@ -55,12 +55,28 @@ namespace Player
                 Debug.LogError("Player's parentNode is null!");
                 return new List<BaseNode>();
             }
-            
+
             var neighbourNodesFiltered = NodeManager.instance.GetNeighbors(parentNode)
                 .Where(node => node.pattern != null).ToList();
             neighbourNodesFiltered.ForEach(node => Logger.Log("Pattern to match: " + node.pattern));
 
             return neighbourNodesFiltered;
+        }
+
+        public override void DestroySelf()
+        {
+            var mainCamera = Camera.main;
+
+            if (mainCamera == null)
+            {
+                Debug.LogError("No camera found in player!");
+            }
+            else
+            {
+                mainCamera.transform.SetParent(null);
+            }
+
+            Destroy(gameObject);
         }
     }
 }

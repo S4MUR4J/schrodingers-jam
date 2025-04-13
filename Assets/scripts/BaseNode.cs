@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using scriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -35,8 +33,7 @@ public class BaseNode : MonoBehaviour
         }
 
     }
-    
-   
+
 
     public virtual void SetElement(BaseElement newElement, bool hide = false)
     {
@@ -78,5 +75,15 @@ public class BaseNode : MonoBehaviour
     public BaseNodeSo GetNodeSo()
     {
         return _nodeSo;
+    }
+
+    public  void DestroySelf()
+    {
+        if (_element)
+        {
+            _element.DestroySelf();
+        }
+
+        Destroy(gameObject);
     }
 }

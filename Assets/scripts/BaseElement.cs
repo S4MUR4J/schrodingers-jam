@@ -33,12 +33,13 @@ public class BaseElement : MonoBehaviour
 
     public void SetParentNode(BaseNode newNode, bool hide = false)
     {
-        if (newNode is EndNode endNode)
-        {
-            var endNodeSo = (EndNodeSo)newNode.GetNodeSo();
-
-            GameManager.instance.LoadLevel(endNodeSo.nextLevelSo);
-        }
+        // if (newNode is EndNode endNode)
+        // {
+        //     EndNodeSo endNodeSo = endNode.GetEndNodeSo();
+        //
+        //     Debug.LogWarning("Tropka found loading next level: " + endNodeSo.nextLevelSo.name);
+        //     GameManager.instance.LoadLevel(endNodeSo.nextLevelSo);
+        // }
 
         if (parentNode != null)
         {
@@ -65,7 +66,7 @@ public class BaseElement : MonoBehaviour
         return parentNode;
     }
 
-    public void DestroySelf()
+    public virtual void DestroySelf()
     {
         parentNode.ClearElement();
         Destroy(gameObject);

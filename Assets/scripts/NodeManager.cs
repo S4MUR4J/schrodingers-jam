@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using levelsSO;
 using scriptableObjects;
-using UnityEditor;
 using UnityEngine;
 
 public class NodeManager : MonoBehaviour
@@ -14,6 +13,8 @@ public class NodeManager : MonoBehaviour
 
 
     private List<List<BaseNode>> _nodes;
+
+    private int debugCounter = 0;
 
 
     private void Awake()
@@ -33,6 +34,8 @@ public class NodeManager : MonoBehaviour
 
     public void LoadLevel(BaseLevelSo nextLevelSo, bool firstLoad = false)
     {
+        Debug.LogWarning("Node Manager Loading Level: " + nextLevelSo.name +" level loaded for time= " + debugCounter++) ;
+
         if (!nextLevelSo)
         {
             //brak następnego poziomu zakładam, że to oznacza ostatni poziom i koniec gry
@@ -46,7 +49,7 @@ public class NodeManager : MonoBehaviour
     {
         foreach (var node in _nodes.SelectMany(row => row))
         {
-            Destroy(node.gameObject);
+            node.DestroySelf();
         }
 
         _nodes.Clear();
@@ -131,6 +134,7 @@ public class NodeManager : MonoBehaviour
         Debug.Log("Getting neighbors for node: " + node.name);
 
         Debug.Log("List Of All Nodes: " + _nodes.Count);
+
         foreach (var row in _nodes)
         {
             Debug.Log("Row: " + row.Count);

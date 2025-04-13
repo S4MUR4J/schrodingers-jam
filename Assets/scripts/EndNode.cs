@@ -17,4 +17,9 @@ public class EndNode : BaseNode
 
         NodeManager.instance.LoadLevel(_endNodeSo.nextLevelSo);
     }
+
+    public EndNodeSo GetEndNodeSo()
+    {
+        return _endNodeSo;
+    }
 }
