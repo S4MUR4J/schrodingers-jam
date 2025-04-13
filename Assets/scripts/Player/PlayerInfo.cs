@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Logger = Utils.Logger;
 
 namespace Player
 {
@@ -33,6 +31,7 @@ namespace Player
             else
             {
                 mainCamera.transform.SetParent(transform);
+                mainCamera.fieldOfView = 90f;
                 mainCamera.transform.localPosition = new Vector3(0, 3, 0);
                 mainCamera.transform.localRotation = Quaternion.Euler(90, 0, 0);
             }
@@ -58,7 +57,7 @@ namespace Player
 
             var neighbourNodesFiltered = NodeManager.instance.GetNeighbors(parentNode)
                 .Where(node => node.pattern != null).ToList();
-           // neighbourNodesFiltered.ForEach(node => Logger.Log("Pattern to match: " + node.pattern));
+            // neighbourNodesFiltered.ForEach(node => Logger.Log("Pattern to match: " + node.pattern));
 
             return neighbourNodesFiltered;
         }
