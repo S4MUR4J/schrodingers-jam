@@ -765,6 +765,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 20732991058096062, guid: 79fa58801a2c3418cb1f371b800c8db1, type: 3}
+      propertyPath: startLevel
+      value: 
+      objectReference: {fileID: 11400000, guid: fa3459f27f69b4cc5878cf1fe252d9da, type: 2}
     - target: {fileID: 549481926398298083, guid: 79fa58801a2c3418cb1f371b800c8db1, type: 3}
       propertyPath: m_Name
       value: GameManager

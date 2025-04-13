@@ -31,15 +31,6 @@ namespace Player
 
         private void Awake()
         {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Debug.LogError("PlayerInfo instance already exist!");
-            }
-
             _typedLetters = new List<char>();
         }
 

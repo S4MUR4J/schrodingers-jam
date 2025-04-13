@@ -1,3 +1,4 @@
+using System;
 using levelsSO;
 using UnityEditor;
 using UnityEngine;
@@ -5,6 +6,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
+    public event EventHandler OnLevelLoad;
+
+    public GameObject Player { get; set; }
 
     [SerializeField] private BaseLevelSo startLevel;
 
@@ -18,19 +23,19 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-       
     }
-    
+
     private void Start()
     {
-        NodeManager.instance.LoadLevel(startLevel);
+        LoadLevel(startLevel);
     }
+
 
     public void LoadLevel(BaseLevelSo level)
     {
         NodeManager.instance.ClearLevel();
         NodeManager.instance.LoadLevel(level);
+        OnLevelLoad?.Invoke(this, EventArgs.Empty);
     }
 
 
