@@ -1,9 +1,12 @@
+using levelsSO;
 using UnityEditor;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
+    [SerializeField] private BaseLevelSo startLevel;
 
     private void Awake()
     {
@@ -15,6 +18,19 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+       
+    }
+    
+    private void Start()
+    {
+        NodeManager.instance.LoadLevel(startLevel);
+    }
+
+    public void LoadLevel(BaseLevelSo level)
+    {
+        NodeManager.instance.ClearLevel();
+        NodeManager.instance.LoadLevel(level);
     }
 
 

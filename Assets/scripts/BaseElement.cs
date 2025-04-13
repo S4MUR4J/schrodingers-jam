@@ -37,7 +37,7 @@ public class BaseElement : MonoBehaviour
         {
             var endNodeSo = (EndNodeSo)newNode.GetNodeSo();
 
-            NodeManager.instance.LoadNextLevel(endNodeSo.nextLevelSo);
+            GameManager.instance.LoadLevel(endNodeSo.nextLevelSo);
         }
 
         if (parentNode != null)

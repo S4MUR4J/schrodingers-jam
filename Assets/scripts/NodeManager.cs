@@ -8,9 +8,8 @@ using UnityEngine;
 public class NodeManager : MonoBehaviour
 {
     public static NodeManager instance;
-
-    [SerializeField] private BaseLevelSo startLevel;
-    [SerializeField] private BaseLevelSo level;
+    
+ 
 
     [SerializeField] private float nodeSize = 1f;
 
@@ -28,16 +27,14 @@ public class NodeManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-
-    private void Start()
-    {
+        
         _nodes = new List<List<BaseNode>>();
-        LoadNextLevel(startLevel, true);
+        
     }
 
-    public void LoadNextLevel(BaseLevelSo nextLevelSo, bool firstLoad = false)
+    
+
+    public void LoadLevel(BaseLevelSo nextLevelSo, bool firstLoad = false)
     {
         if (!nextLevelSo)
         {

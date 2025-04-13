@@ -1,5 +1,4 @@
 using scriptableObjects;
-using UnityEngine;
 
 public class EndNode : BaseNode
 {
@@ -16,6 +15,6 @@ public class EndNode : BaseNode
         base.SetElement(newElement, movePlayer);
 
 
-        NodeManager.instance.LoadNextLevel(_endNodeSo.nextLevelSo);
+        NodeManager.instance.LoadLevel(_endNodeSo.nextLevelSo);
     }
 }
