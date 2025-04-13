@@ -1,12 +1,12 @@
 using scriptableObjects;
-using UnityEngine;
 
 public class EndNode : BaseNode
 {
     private EndNodeSo _endNodeSo;
 
-    private void Awake()
+    private new void Awake()
     {
+        base.Awake();
         _endNodeSo = (EndNodeSo)GetNodeSo();
     }
 
@@ -15,6 +15,11 @@ public class EndNode : BaseNode
         base.SetElement(newElement, movePlayer);
 
 
-        NodeManager.instance.LoadNextLevel(_endNodeSo.nextLevelSo);
+        GameManager.instance.LoadLevel(_endNodeSo.nextLevelSo);
+    }
+
+    public EndNodeSo GetEndNodeSo()
+    {
+        return _endNodeSo;
     }
 }

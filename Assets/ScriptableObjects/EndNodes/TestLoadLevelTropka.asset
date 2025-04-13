@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa3dcbd331d9c487fb636ce3426a1f85, type: 3}
-  m_Name: ITClassTrotka
+  m_Name: TestLoadLevelTropka
   m_EditorClassIdentifier: 
   prefab: {fileID: 3038656675337776515, guid: 785197c88dca9447c921a2473d5d0acc, type: 3}
   elementSo: {fileID: 0}
   withPattern: 1
-  nextLevelSo: {fileID: 11400000, guid: d11c18ad8432340cda15a4f55ab3ce11, type: 2}
+  nextLevelSo: {fileID: 11400000, guid: b3ed99369b02144559d8250104c80a8e, type: 2}

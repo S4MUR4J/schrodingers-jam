@@ -2,21 +2,19 @@ using System.Collections.Generic;
 using System.Linq;
 using levelsSO;
 using scriptableObjects;
-using UnityEditor;
 using UnityEngine;
 
 public class NodeManager : MonoBehaviour
 {
-
     public static NodeManager instance;
 
-    [SerializeField] private BaseLevelSo startLevel;
-    [SerializeField] private BaseLevelSo level;
 
     [SerializeField] private float nodeSize = 1f;
 
 
     private List<List<BaseNode>> _nodes;
+
+    private int debugCounter = 0;
 
 
     private void Awake()
@@ -29,50 +27,47 @@ public class NodeManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
 
-
-    private void Start()
-    {
         _nodes = new List<List<BaseNode>>();
-        LoadNextLevel(startLevel, true);
     }
 
-    public void LoadNextLevel(BaseLevelSo nextLevelSo, bool firstLoad = false)
+
+    public void LoadLevel(BaseLevelSo nextLevelSo, bool firstLoad = false)
     {
-        if (!firstLoad)
-        {
-            foreach (var node in _nodes.SelectMany(row => row))
-            {
-                Destroy(node.gameObject);
-            }
-
-            _nodes.Clear();
-        }
-
+        
         if (!nextLevelSo)
         {
             //brak następnego poziomu zakładam, że to oznacza ostatni poziom i koniec gry
-            QuitGame();
+            GameManager.instance.QuitGame();
         }
 
         SpawnNodeGrid(nextLevelSo);
     }
 
-    private void SpawnNodeGrid(BaseLevelSo level)
+    public void ClearLevel()
     {
-        var gridHeight = level.nodes.Count;
+        foreach (var node in _nodes.SelectMany(row => row))
+        {
+            node.DestroySelf();
+        }
+
+        _nodes.Clear();
+    }
+
+    private void SpawnNodeGrid(BaseLevelSo spawnedLevelSo)
+    {
+        var gridHeight = spawnedLevelSo.nodes.Count;
 
         var startPosition = transform.position;
 
         for (var x = 0; x < gridHeight; x++)
         {
             var rowList = new List<BaseNode>();
-            var gridWidth = level.nodes[x].row.Count;
+            var gridWidth = spawnedLevelSo.nodes[x].row.Count;
 
             for (var z = 0; z < gridWidth; z++)
             {
-                var nodeSo = level.nodes[x].row[z];
+                var nodeSo = spawnedLevelSo.nodes[x].row[z];
 
                 if (!nodeSo)
                 {
@@ -135,10 +130,18 @@ public class NodeManager : MonoBehaviour
 
     public List<BaseNode> GetNeighbors(BaseNode node)
     {
+        
+        if (!node)
+        {
+            Debug.LogError("Player Parent Node is null!");
+            return new List<BaseNode>();
+        }
+
         var neighbors = new List<BaseNode>();
 
         // Find node's position in grid
         int nodeX = -1, nodeZ = -1;
+
 
         for (var x = 0; x < _nodes.Count; x++)
         {
@@ -153,35 +156,27 @@ public class NodeManager : MonoBehaviour
             if (nodeX != -1) break;
         }
 
-        // Check for neighbors in the 4 possible directions
+        if (nodeX == -1 || nodeZ == -1)
+        {
+            return neighbors;
+        }
+
         // Up
-        if (nodeX > 0)
+        if (nodeX > 0 && nodeZ < _nodes[nodeX - 1].Count)
             neighbors.Add(_nodes[nodeX - 1][nodeZ]);
 
-        // Down
-        if (nodeX < _nodes.Count - 1)
+// Down
+        if (nodeX < _nodes.Count - 1 && nodeZ < _nodes[nodeX + 1].Count)
             neighbors.Add(_nodes[nodeX + 1][nodeZ]);
 
-        // Left
+// Left
         if (nodeZ > 0)
             neighbors.Add(_nodes[nodeX][nodeZ - 1]);
 
-        // Right
+// Right
         if (nodeZ < _nodes[nodeX].Count - 1)
             neighbors.Add(_nodes[nodeX][nodeZ + 1]);
 
         return neighbors;
-    }
-
-
-    private static void QuitGame()
-    {
-#if UNITY_EDITOR
-        // If running in the Unity Editor, stop the play mode
-        EditorApplication.isPlaying = false;
-#else
-        // If in a build, quit the application
-        Application.Quit();
-#endif
     }
 }

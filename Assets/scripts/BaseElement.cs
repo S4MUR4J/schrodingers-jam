@@ -33,12 +33,7 @@ public class BaseElement : MonoBehaviour
 
     public void SetParentNode(BaseNode newNode, bool hide = false)
     {
-        if (newNode is EndNode endNode)
-        {
-            var endNodeSo = (EndNodeSo)newNode.GetNodeSo();
-
-            NodeManager.instance.LoadNextLevel(endNodeSo.nextLevelSo);
-        }
+        
 
         if (parentNode != null)
         {
@@ -65,7 +60,7 @@ public class BaseElement : MonoBehaviour
         return parentNode;
     }
 
-    public void DestroySelf()
+    public virtual void DestroySelf()
     {
         parentNode.ClearElement();
         Destroy(gameObject);

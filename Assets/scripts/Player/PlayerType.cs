@@ -31,15 +31,6 @@ namespace Player
 
         private void Awake()
         {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Debug.LogError("PlayerInfo instance already exist!");
-            }
-
             _typedLetters = new List<char>();
         }
 
@@ -114,8 +105,8 @@ namespace Player
             OnPlayerTypeLetter?.Invoke(this, args);
 
 
-            Logger.Log("Last pressed key stoke in Player Type: " + lastPressedChar);
-            Logger.Log("Current TypeSentence In Player Type: " + TypeSentence);
+           // Logger.Log("Last pressed key stoke in Player Type: " + lastPressedChar);
+          //  Logger.Log("Current TypeSentence In Player Type: " + TypeSentence);
         }
 
         private static char? GetPressedChar()
