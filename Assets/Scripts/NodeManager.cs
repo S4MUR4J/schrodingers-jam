@@ -5,7 +5,10 @@ public class NodeManager : MonoBehaviour
 {
     public static NodeManager Instance { get; private set; }
 
-    private List<BaseNode> allNodes = new();
+    private Dictionary<Vector2Int, BaseNode> nodeGrid = new();
+
+
+    private int _wordIndex;
 
     private void Awake()
     {
@@ -14,26 +17,39 @@ public class NodeManager : MonoBehaviour
 
     public void Register(BaseNode node)
     {
-        allNodes.Add(node);
+        nodeGrid.TryAdd(node.GridPosition, node);
+        if (_wordIndex >= nodeGrid.Count)
+        {
+            _wordIndex = 0;
+        }
+
+        node.Pattern = Constants.Words[_wordIndex++];
     }
 
     public BaseNode GetClosestNode(Vector3 position)
     {
-        BaseNode closest = null;
-        var closestDist = float.MaxValue;
+        var gridPos = new Vector2Int(
+            Mathf.RoundToInt(position.x),
+            Mathf.RoundToInt(position.z)
+        );
 
-        foreach (var node in allNodes)
+        return nodeGrid.GetValueOrDefault(gridPos);
+    }
+
+
+    public List<BaseNode> GetNeighbors(BaseNode node)
+    {
+        List<BaseNode> neighbors = new();
+
+        foreach (var dir in Constants.Directions)
         {
-            var dist = Vector3.Distance(position, node.transform.position);
-            if (!(dist < closestDist))
+            Vector2Int neighborPos = node.GridPosition + dir;
+            if (nodeGrid.TryGetValue(neighborPos, out var neighbor))
             {
-                continue;
+                neighbors.Add(neighbor);
             }
-
-            closestDist = dist;
-            closest = node;
         }
 
-        return closest;
+        return neighbors;
     }
 }

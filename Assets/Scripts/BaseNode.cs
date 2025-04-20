@@ -3,15 +3,30 @@ using UnityEngine;
 
 public class BaseNode : MonoBehaviour
 {
-    [SerializeField] private string pattern;
-    [SerializeField] private bool canMove;
+    public Vector2Int GridPosition { get; private set; }
+
+    public string Pattern
+    {
+        get => textMesh.text;
+        set => textMesh.text = value;
+    }
 
 
-    [Header("Setup")] [SerializeField] private TextMeshProUGUI textMesh;
+    [Header("Design")] [SerializeField] private bool canMove;
+
+    [Header("Unity Setup")] [SerializeField]
+    private TextMeshProUGUI textMesh;
+
     [SerializeField] private Transform target;
+
 
     private void Awake()
     {
+        GridPosition = new Vector2Int(
+            Mathf.RoundToInt(transform.position.x),
+            Mathf.RoundToInt(transform.position.z)
+        );
+
         if (!canMove)
         {
             return;
@@ -29,19 +44,23 @@ public class BaseNode : MonoBehaviour
             return;
         }
 
-        textMesh.text = pattern;
-
         NodeManager.Instance.Register(this);
     }
 
     public void EnableTextMesh()
     {
-        textMesh.enabled = true;
+        if (textMesh)
+        {
+            textMesh.enabled = true;
+        }
     }
 
     public void DisableTextMesh()
     {
-        textMesh.enabled = false;
+        if (textMesh)
+        {
+            textMesh.enabled = false;
+        }
     }
 
     public bool CanMove()
@@ -52,10 +71,5 @@ public class BaseNode : MonoBehaviour
     public Transform GetTarget()
     {
         return target;
-    }
-
-    public string GetPattern()
-    {
-        return pattern;
     }
 }
