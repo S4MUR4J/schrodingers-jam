@@ -8,7 +8,8 @@ namespace Player
     {
         [SerializeField] private float lerpSpeed = 5f;
         public BaseNode PositionNode { get; private set; }
-        public bool IsMoving => _isLerping;
+        public PlayerInput PlayerInput { get; set; }
+
 
         private bool _isLerping;
         private Vector3 _targetPosition;
@@ -28,7 +29,7 @@ namespace Player
                 PositionNode.DisableTextMesh();
             }
         }
-        
+
         private void Update()
         {
             if (!_isLerping)

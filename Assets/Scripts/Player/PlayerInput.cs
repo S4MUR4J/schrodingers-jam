@@ -34,7 +34,10 @@ namespace Player
             if (_player == null)
             {
                 Debug.LogError("Player is null in PlayerInput");
+                return;
             }
+
+            _player.PlayerInput = this;
         }
 
         private void Update()
@@ -87,10 +90,10 @@ namespace Player
             // Check for exact match
             var matchedNode = matchingNodes.FirstOrDefault(n =>
             {
-              //  if (!typed.EndsWith(_finishPattern))
-             //       return false;
+                //  if (!typed.EndsWith(_finishPattern))
+                //       return false;
 
-         //       return typed == n.Pattern + _finishPattern;
+                //       return typed == n.Pattern + _finishPattern;
                 return typed == n.Pattern;
             });
 
