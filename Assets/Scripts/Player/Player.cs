@@ -1,34 +1,64 @@
-using System.Linq;
+using Managers;
+using Nodes;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+namespace Player
 {
-    private BaseNode _positionNode;
-
-    private void Start()
+    public class Player : MonoBehaviour
     {
-        _positionNode = NodeManager.Instance.GetClosestNode(transform.position);
+        [SerializeField] private float lerpSpeed = 5f;
+        public BaseNode PositionNode { get; private set; }
+        public bool IsMoving => _isLerping;
 
-        if (_positionNode == null)
+        private bool _isLerping;
+        private Vector3 _targetPosition;
+
+        private void Awake()
         {
-            Debug.LogError("Starting Node Not Found For Player");
+            GameManager.Instance.Player = this;
+
+            PositionNode = NodeManager.Instance.GetClosestNode(transform.position);
+
+            if (PositionNode == null)
+            {
+                Debug.LogError("Starting Node Not Found For Player");
+            }
+            else
+            {
+                PositionNode.DisableTextMesh();
+            }
         }
-        else
+        
+        private void Update()
         {
-            _positionNode.DisableTextMesh();
+            if (!_isLerping)
+            {
+                return;
+            }
+
+            transform.position = Vector3.Lerp(transform.position, _targetPosition, Time.deltaTime * lerpSpeed);
+
+            if (!(Vector3.Distance(transform.position, _targetPosition) < 0.001f))
+            {
+                return;
+            }
+
+            transform.position = _targetPosition;
+            _isLerping = false;
         }
 
-
-        GameManager.Instance.Player = this;
-    }
-
-    private void Update()
-    {
-        var neighbours = NodeManager.Instance.GetNeighbors(_positionNode);
-
-        foreach (var node in neighbours.Where(node => node.CanMove()))
+        public void Move(BaseNode node)
         {
-            Debug.Log("Found Node with pattern=" + node.Pattern);
+            Debug.Log($"Player Moving to Node {node}");
+
+            node.DisableTextMesh();
+            PositionNode.EnableTextMesh();
+
+            PositionNode = node;
+
+            transform.parent = node.GetTarget();
+            _targetPosition = node.GetTarget().position;
+            _isLerping = true;
         }
     }
 }

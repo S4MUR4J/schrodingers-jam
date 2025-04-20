@@ -1,75 +1,79 @@
+using Managers;
 using TMPro;
 using UnityEngine;
 
-public class BaseNode : MonoBehaviour
+namespace Nodes
 {
-    public Vector2Int GridPosition { get; private set; }
-
-    public string Pattern
+    public class BaseNode : MonoBehaviour
     {
-        get => textMesh.text;
-        set => textMesh.text = value;
-    }
+        public Vector2Int GridPosition { get; private set; }
 
-
-    [Header("Design")] [SerializeField] private bool canMove;
-
-    [Header("Unity Setup")] [SerializeField]
-    private TextMeshProUGUI textMesh;
-
-    [SerializeField] private Transform target;
-
-
-    private void Awake()
-    {
-        GridPosition = new Vector2Int(
-            Mathf.RoundToInt(transform.position.x),
-            Mathf.RoundToInt(transform.position.z)
-        );
-
-        if (!canMove)
+        public string Pattern
         {
-            return;
+            get => textMesh.text;
+            set => textMesh.text = value;
         }
 
-        if (target == null)
+
+        [Header("Design")] [SerializeField] private bool canMove;
+
+        [Header("Unity Setup")] [SerializeField]
+        private TextMeshProUGUI textMesh;
+
+        [SerializeField] private Transform target;
+
+
+        private void Awake()
         {
-            Debug.LogError("Target is null");
-            return;
+            GridPosition = new Vector2Int(
+                Mathf.RoundToInt(transform.position.x),
+                Mathf.RoundToInt(transform.position.z)
+            );
+
+            if (!canMove)
+            {
+                return;
+            }
+
+            if (target == null)
+            {
+                Debug.LogError("Target is null");
+                return;
+            }
+
+            if (textMesh == null)
+            {
+                Debug.LogError("TextMesh is null");
+                return;
+            }
+
+            NodeManager.Instance.Register(this);
         }
 
-        if (textMesh == null)
+        public void EnableTextMesh()
         {
-            Debug.LogError("TextMesh is null");
-            return;
+            if (textMesh)
+            {
+                textMesh.enabled = true;
+            }
         }
 
-        NodeManager.Instance.Register(this);
-    }
-
-    public void EnableTextMesh()
-    {
-        if (textMesh)
+        public void DisableTextMesh()
         {
-            textMesh.enabled = true;
+            if (textMesh)
+            {
+                textMesh.enabled = false;
+            }
         }
-    }
 
-    public void DisableTextMesh()
-    {
-        if (textMesh)
+        public bool CanMove()
         {
-            textMesh.enabled = false;
+            return canMove;
         }
-    }
 
-    public bool CanMove()
-    {
-        return canMove;
-    }
-
-    public Transform GetTarget()
-    {
-        return target;
+        public Transform GetTarget()
+        {
+            return target;
+        }
     }
 }

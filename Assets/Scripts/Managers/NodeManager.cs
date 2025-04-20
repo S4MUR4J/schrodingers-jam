@@ -1,55 +1,68 @@
 using System.Collections.Generic;
+using System.Linq;
+using Nodes;
 using UnityEngine;
+using Utils;
 
-public class NodeManager : MonoBehaviour
+namespace Managers
 {
-    public static NodeManager Instance { get; private set; }
-
-    private Dictionary<Vector2Int, BaseNode> nodeGrid = new();
-
-
-    private int _wordIndex;
-
-    private void Awake()
+    public class NodeManager : MonoBehaviour
     {
-        Instance = this;
-    }
+        public static NodeManager Instance { get; private set; }
 
-    public void Register(BaseNode node)
-    {
-        nodeGrid.TryAdd(node.GridPosition, node);
-        if (_wordIndex >= nodeGrid.Count)
+        private Dictionary<Vector2Int, BaseNode> nodeGrid = new();
+
+
+        private int _wordIndex;
+
+        private void Awake()
         {
-            _wordIndex = 0;
+            Instance = this;
         }
 
-        node.Pattern = Constants.Words[_wordIndex++];
-    }
-
-    public BaseNode GetClosestNode(Vector3 position)
-    {
-        var gridPos = new Vector2Int(
-            Mathf.RoundToInt(position.x),
-            Mathf.RoundToInt(position.z)
-        );
-
-        return nodeGrid.GetValueOrDefault(gridPos);
-    }
-
-
-    public List<BaseNode> GetNeighbors(BaseNode node)
-    {
-        List<BaseNode> neighbors = new();
-
-        foreach (var dir in Constants.Directions)
+        public void Register(BaseNode node)
         {
-            Vector2Int neighborPos = node.GridPosition + dir;
-            if (nodeGrid.TryGetValue(neighborPos, out var neighbor))
+            nodeGrid.TryAdd(node.GridPosition, node);
+            if (_wordIndex >= nodeGrid.Count)
             {
-                neighbors.Add(neighbor);
+                _wordIndex = 0;
             }
+
+            node.Pattern = Constants.Words[_wordIndex++];
         }
 
-        return neighbors;
+        public BaseNode GetClosestNode(Vector3 position)
+        {
+            var gridPos = new Vector2Int(
+                Mathf.RoundToInt(position.x),
+                Mathf.RoundToInt(position.z)
+            );
+
+            return nodeGrid.GetValueOrDefault(gridPos);
+        }
+
+
+        public List<BaseNode> GetNeighbors(BaseNode node)
+        {
+            if (node == null)
+            {
+                return new List<BaseNode>();
+            }
+
+            List<BaseNode> neighbors = new();
+
+            foreach (var dir in Constants.Directions)
+            {
+                var neighborPos = node.GridPosition + dir;
+                if (nodeGrid.TryGetValue(neighborPos, out var neighbor))
+                {
+                    neighbors.Add(neighbor);
+                }
+            }
+
+            Debug.Log(string.Join(", ", neighbors.Select(n => n.Pattern)));
+            
+            return neighbors;
+        }
     }
 }

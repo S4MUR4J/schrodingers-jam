@@ -1,22 +1,25 @@
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+namespace Managers
 {
-    public static GameManager Instance { get; private set; }
-
-    public Player Player { get; set;}
-
-    private void Awake()
+    public class GameManager : MonoBehaviour
     {
-        if (Instance != null && Instance != this)
+        public static GameManager Instance { get; private set; }
+
+        public Player.Player Player { get; set;}
+
+        private void Awake()
         {
-            Destroy(gameObject);
-            return;
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
+
+            //zachowaj pomiędzy scenami
+            DontDestroyOnLoad(gameObject);
         }
-
-        Instance = this;
-
-        //zachowaj pomiędzy scenami
-        DontDestroyOnLoad(gameObject);
     }
 }
