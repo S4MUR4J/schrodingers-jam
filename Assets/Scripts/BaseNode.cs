@@ -12,19 +12,36 @@ public class BaseNode : MonoBehaviour
 
     private void Awake()
     {
+        if (!canMove)
+        {
+            return;
+        }
+
         if (target == null)
         {
             Debug.LogError("Target is null");
             return;
         }
 
-        if (textMesh == null && canMove)
+        if (textMesh == null)
         {
             Debug.LogError("TextMesh is null");
             return;
         }
 
         textMesh.text = pattern;
+
+        NodeManager.Instance.Register(this);
+    }
+
+    public void EnableTextMesh()
+    {
+        textMesh.enabled = true;
+    }
+
+    public void DisableTextMesh()
+    {
+        textMesh.enabled = false;
     }
 
     public bool CanMove()
