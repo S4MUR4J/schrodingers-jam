@@ -39,9 +39,6 @@ namespace Player
 
         private void Update()
         {
-            if (_player.IsMoving)
-                return;
-
             HandleInput();
             TryMatchPattern();
         }

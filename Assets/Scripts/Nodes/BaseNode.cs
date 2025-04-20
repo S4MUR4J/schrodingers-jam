@@ -6,7 +6,7 @@ namespace Nodes
 {
     public class BaseNode : MonoBehaviour
     {
-        public Vector2Int GridPosition { get; private set; }
+       
 
         public string Pattern
         {
@@ -25,11 +25,6 @@ namespace Nodes
 
         private void Awake()
         {
-            GridPosition = new Vector2Int(
-                Mathf.RoundToInt(transform.position.x),
-                Mathf.RoundToInt(transform.position.z)
-            );
-
             if (!canMove)
             {
                 return;
@@ -75,5 +70,7 @@ namespace Nodes
         {
             return target;
         }
+
+       
     }
 }

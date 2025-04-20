@@ -8,9 +8,10 @@ namespace Managers
 {
     public class NodeManager : MonoBehaviour
     {
+        [SerializeField] private LayerMask nodeLayer;
         public static NodeManager Instance { get; private set; }
 
-        private Dictionary<Vector2Int, BaseNode> nodeGrid = new();
+        private readonly List<BaseNode> allNodes = new();
 
 
         private int _wordIndex;
@@ -22,8 +23,8 @@ namespace Managers
 
         public void Register(BaseNode node)
         {
-            nodeGrid.TryAdd(node.GridPosition, node);
-            if (_wordIndex >= nodeGrid.Count)
+            allNodes.Add(node);
+            if (_wordIndex >= Constants.Words.Count)
             {
                 _wordIndex = 0;
             }
@@ -33,36 +34,56 @@ namespace Managers
 
         public BaseNode GetClosestNode(Vector3 position)
         {
-            var gridPos = new Vector2Int(
-                Mathf.RoundToInt(position.x),
-                Mathf.RoundToInt(position.z)
-            );
+            if (allNodes.Count == 0) return null;
 
-            return nodeGrid.GetValueOrDefault(gridPos);
+            BaseNode closest = null;
+            var closestDist = float.MaxValue;
+
+            foreach (var node in allNodes)
+            {
+                var dist = Vector3.Distance(node.transform.position, position);
+                if (!(dist < closestDist)) continue;
+                closest = node;
+                closestDist = dist;
+            }
+
+            return closest;
         }
 
 
         public List<BaseNode> GetNeighbors(BaseNode node)
         {
-            if (node == null)
-            {
-                return new List<BaseNode>();
-            }
+            if (!node) return new List<BaseNode>();
 
-            List<BaseNode> neighbors = new();
-
-            foreach (var dir in Constants.Directions)
+            var results = new List<BaseNode>();
+            var directions = new Vector3[]
             {
-                var neighborPos = node.GridPosition + dir;
-                if (nodeGrid.TryGetValue(neighborPos, out var neighbor))
+                Vector3.forward, // Z+
+                Vector3.back, // Z-
+                Vector3.right, // X+
+                Vector3.left // X-
+            };
+
+            const float rayDistance = 2; // how far to look for neighbors
+            var origin = node.transform.position + Vector3.up * 0.5f; // lift the ray slightly
+
+            foreach (var dir in directions)
+            {
+                if (!Physics.Raycast(origin, dir, out RaycastHit hit, rayDistance)) continue;
+                var other = hit.collider.GetComponent<BaseNode>();
+                if (other != null && other != node && other.CanMove())
                 {
-                    neighbors.Add(neighbor);
+                    results.Add(other);
                 }
             }
 
-            Debug.Log(string.Join(", ", neighbors.Select(n => n.Pattern)));
-            
-            return neighbors;
+            Debug.DrawRay(origin, Vector3.forward * rayDistance, Color.red, 1f);
+            Debug.DrawRay(origin, Vector3.back * rayDistance, Color.red, 1f);
+            Debug.DrawRay(origin, Vector3.left * rayDistance, Color.red, 1f);
+            Debug.DrawRay(origin, Vector3.right * rayDistance, Color.red, 1f);
+
+            Debug.Log($"[Raycast] Neighbors of {node.Pattern}: {string.Join(", ", results.Select(n => n.Pattern))}");
+            return results;
         }
     }
 }
