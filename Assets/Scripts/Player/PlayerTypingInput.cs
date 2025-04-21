@@ -1,4 +1,5 @@
 using Managers;
+using UnityEngine.InputSystem;
 
 namespace Player
 {
@@ -12,12 +13,12 @@ namespace Player
     {
         public event Action<string> OnTypedChanged;
 
-        [SerializeField] private KeyCode clearKey = KeyCode.Backspace;
-        [SerializeField] private KeyCode confirmKey = KeyCode.Return;
         [SerializeField] private PlayerPatternMatcher patternMatcher;
 
         private readonly List<char> _typedLetters = new();
         private string TypedSentence => new(_typedLetters.Where(c => !char.IsControl(c)).ToArray());
+
+        private PlayerControls _controls;
 
         public string GetCurrentInput() => TypedSentence;
 
@@ -30,37 +31,65 @@ namespace Player
             }
 
             GameManager.Instance.Player.PlayerInput = this;
-            
+
             DontDestroyOnLoad(this);
         }
 
-        private void Update()
+        private void OnEnable()
         {
-            HandleTyping();
-            HandleConfirm();
+            _controls = new PlayerControls();
+            _controls.Gameplay.Enable();
+
+            _controls.Gameplay.TypeCharacter.performed += OnAnyKeyPressed;
+            _controls.Gameplay.ClearInput.performed += OnClearInput;
+            _controls.Gameplay.ConfirmInput.performed += OnConfirmInput;
         }
 
-        private void HandleTyping()
+        private void OnDisable()
         {
-            if (Input.GetKeyDown(clearKey))
-            {
-                Clear();
+            _controls.Gameplay.TypeCharacter.performed -= OnAnyKeyPressed;
+            _controls.Gameplay.ClearInput.performed -= OnClearInput;
+            _controls.Gameplay.ConfirmInput.performed -= OnConfirmInput;
+            _controls.Gameplay.Disable();
+        }
+
+        private void OnClearInput(InputAction.CallbackContext ctx)
+        {
+            Clear();
+        }
+
+        private void OnConfirmInput(InputAction.CallbackContext ctx)
+        {
+            Debug.Log("OnConfirmInput called with current input" + GetCurrentInput());
+            patternMatcher?.TryMatch();
+        }
+
+        private void OnAnyKeyPressed(InputAction.CallbackContext ctx)
+        {
+            var keyboard = Keyboard.current;
+
+            var pressedKey = keyboard?.allKeys.FirstOrDefault(k => k is { wasPressedThisFrame: true });
+
+            if (pressedKey == null || string.IsNullOrEmpty(pressedKey.displayName))
                 return;
-            }
 
-            var pressedChar = Input.inputString.FirstOrDefault();
-            if (pressedChar == '\0') return;
+            if (pressedKey == keyboard.enterKey ||
+                pressedKey == keyboard.tabKey ||
+                pressedKey == keyboard.escapeKey ||
+                pressedKey == keyboard.shiftKey ||
+                pressedKey == keyboard.ctrlKey ||
+                pressedKey == keyboard.altKey)
+                return;
 
-            _typedLetters.Add(pressedChar);
+            var inputChar = pressedKey.displayName[0];
+
+            if (!char.IsLetterOrDigit(inputChar) && !char.IsPunctuation(inputChar) && !char.IsSymbol(inputChar))
+                return;
+
+            inputChar = keyboard.shiftKey.isPressed ? char.ToUpper(inputChar) : char.ToLower(inputChar);
+
+            _typedLetters.Add(inputChar);
             OnTypedChanged?.Invoke(TypedSentence);
-        }
-
-        private void HandleConfirm()
-        {
-            if (Input.GetKeyDown(confirmKey))
-            {
-                patternMatcher?.TryMatch();
-            }
         }
 
         public void Clear()

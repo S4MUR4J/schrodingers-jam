@@ -27,32 +27,16 @@ namespace Player
         public void TryMatch()
         {
             var input = typingInput.GetCurrentInput();
-            var neighbors = player.GetNeighbours();
-
-            if (neighbors == null || neighbors.Count == 0)
-                return;
-
-            var matchingNodes = neighbors
-                .Where(n => !string.IsNullOrEmpty(n.Pattern))
-                .Where(n =>
-                {
-                    var expected = n.Pattern;
-                    return expected.StartsWith(input);
-                })
-                .ToList();
-
-            if (!matchingNodes.Any())
-            {
-                typingInput.Clear();
-                return;
-            }
-
-            var matchedNode = matchingNodes.FirstOrDefault(n => input == n.Pattern);
-            if (matchedNode == null)
-                return;
+            var matchedNode = player.GetNeighbours()
+                ?.Where(n => !string.IsNullOrEmpty(n.Pattern) && n.Pattern.StartsWith(input))
+                .FirstOrDefault(n => n.Pattern == input);
 
             typingInput.Clear();
-            player.Move(matchedNode);
+
+            if (matchedNode)
+            {
+                player.Move(matchedNode);
+            }
         }
     }
 }
