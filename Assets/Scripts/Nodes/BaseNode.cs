@@ -90,35 +90,5 @@ namespace Nodes
         {
             return target;
         }
-
-
-        public List<BaseNode> GetNeighbors(BaseNode node)
-        {
-            if (!node) return new List<BaseNode>();
-
-            var results = new List<BaseNode>();
-            var directions = new[]
-            {
-                Vector3.forward, // Z+
-                Vector3.back, // Z-
-                Vector3.right, // X+
-                Vector3.left // X-
-            };
-
-            const float rayDistance = 2; // how far to look for neighbors
-            var origin = node.transform.position + Vector3.up * 0.5f; // lift the ray slightly
-
-            foreach (var dir in directions)
-            {
-                if (!Physics.Raycast(origin, dir, out RaycastHit hit, rayDistance)) continue;
-                var other = hit.collider.GetComponent<BaseNode>();
-                if (other != null && other != node && other.CanMove())
-                {
-                    results.Add(other);
-                }
-            }
-
-            return results;
-        }
     }
 }
