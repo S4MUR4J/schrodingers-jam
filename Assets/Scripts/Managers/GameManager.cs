@@ -17,8 +17,7 @@ namespace Managers
             }
 
             Instance = this;
-
-            //zachowaj pomiędzy scenami
+            
             DontDestroyOnLoad(gameObject);
         }
     }

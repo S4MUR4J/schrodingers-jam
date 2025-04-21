@@ -20,6 +20,8 @@ namespace Player
 
 
             GameManager.Instance.Player.PlayerInput.OnPlayerTypeLetter += HandlePlayerHealthChanged;
+
+            DontDestroyOnLoad(this);
         }
 
         private void HandlePlayerHealthChanged(object sender, PlayerInput.PlayerTypeEventArgs e)

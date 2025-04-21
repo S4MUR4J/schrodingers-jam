@@ -38,6 +38,9 @@ namespace Player
             }
 
             _player.PlayerInput = this;
+
+
+            DontDestroyOnLoad(this);
         }
 
         private void Update()
@@ -65,7 +68,12 @@ namespace Player
 
         private void TryMatchPattern()
         {
-            var neighbors = NodeManager.Instance.GetNeighbors(_player.PositionNode);
+            var neighbors = _player.GetNeighbours();
+
+            if (neighbors == null || neighbors.Count == 0)
+            {
+                return;
+            }
 
             var typed = TypedSentence;
             // Find partial matches

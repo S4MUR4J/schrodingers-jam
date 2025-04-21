@@ -19,6 +19,9 @@ namespace Managers
         private void Awake()
         {
             Instance = this;
+
+
+            DontDestroyOnLoad(this);
         }
 
         public void Register(BaseNode node)
@@ -34,20 +37,19 @@ namespace Managers
 
         public BaseNode GetClosestNode(Vector3 position)
         {
-            if (allNodes.Count == 0) return null;
+            Debug.Log("GetClosestNode called for" + position);
 
-            BaseNode closest = null;
-            var closestDist = float.MaxValue;
+            var origin = position + Vector3.up * 1f;
 
-            foreach (var node in allNodes)
+            if (!Physics.Raycast(origin, Vector3.down, out var hit, 5f))
             {
-                var dist = Vector3.Distance(node.transform.position, position);
-                if (!(dist < closestDist)) continue;
-                closest = node;
-                closestDist = dist;
+                Debug.LogError("Not not found for position " + position);
+                return null;
             }
 
-            return closest;
+            var node = hit.collider.GetComponent<BaseNode>();
+            Debug.Log(node);
+            return node != null ? node : null;
         }
 
 
@@ -56,7 +58,7 @@ namespace Managers
             if (!node) return new List<BaseNode>();
 
             var results = new List<BaseNode>();
-            var directions = new Vector3[]
+            var directions = new[]
             {
                 Vector3.forward, // Z+
                 Vector3.back, // Z-
@@ -69,7 +71,7 @@ namespace Managers
 
             foreach (var dir in directions)
             {
-                if (!Physics.Raycast(origin, dir, out RaycastHit hit, rayDistance)) continue;
+                if (!Physics.Raycast(origin, dir, out var hit, rayDistance)) continue;
                 var other = hit.collider.GetComponent<BaseNode>();
                 if (other != null && other != node && other.CanMove())
                 {
@@ -77,12 +79,6 @@ namespace Managers
                 }
             }
 
-            Debug.DrawRay(origin, Vector3.forward * rayDistance, Color.red, 1f);
-            Debug.DrawRay(origin, Vector3.back * rayDistance, Color.red, 1f);
-            Debug.DrawRay(origin, Vector3.left * rayDistance, Color.red, 1f);
-            Debug.DrawRay(origin, Vector3.right * rayDistance, Color.red, 1f);
-
-            Debug.Log($"[Raycast] Neighbors of {node.Pattern}: {string.Join(", ", results.Select(n => n.Pattern))}");
             return results;
         }
     }

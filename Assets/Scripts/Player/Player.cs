@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Managers;
 using Nodes;
 using UnityEngine;
@@ -7,12 +8,15 @@ namespace Player
     public class Player : MonoBehaviour
     {
         [SerializeField] private float lerpSpeed = 5f;
-        public BaseNode PositionNode { get; private set; }
+        private BaseNode PositionNode { get; set; }
         public PlayerInput PlayerInput { get; set; }
 
 
         private bool _isLerping;
         private Vector3 _targetPosition;
+
+
+        private List<BaseNode> _neighbours;
 
         private void Awake()
         {
@@ -27,7 +31,12 @@ namespace Player
             else
             {
                 PositionNode.DisableTextMesh();
+                _neighbours = NodeManager.Instance.GetNeighbors(PositionNode);
+                HighlightNeighbours(true);
             }
+
+
+            DontDestroyOnLoad(this);
         }
 
         private void Update()
@@ -48,18 +57,35 @@ namespace Player
             _isLerping = false;
         }
 
+        public List<BaseNode> GetNeighbours()
+        {
+            return _neighbours;
+        }
+
         public void Move(BaseNode node)
         {
-            Debug.Log($"Player Moving to Node {node}");
+            PositionNode.EnableTextMesh();
+            HighlightNeighbours(false);
+
 
             node.DisableTextMesh();
-            PositionNode.EnableTextMesh();
-
+            _neighbours = NodeManager.Instance.GetNeighbors(node);
+            HighlightNeighbours(true);
             PositionNode = node;
 
+
+            //move player to target position
             transform.parent = node.GetTarget();
             _targetPosition = node.GetTarget().position;
             _isLerping = true;
+        }
+
+        private void HighlightNeighbours(bool highlight)
+        {
+            foreach (var neighbour in _neighbours)
+            {
+                neighbour.Highlight(highlight);
+            }
         }
     }
 }

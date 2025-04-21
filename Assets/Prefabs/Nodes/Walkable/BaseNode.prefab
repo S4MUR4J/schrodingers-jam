@@ -48,8 +48,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87325df7e70c44caab451d01c5ecaee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neighbourDistance: 0.73
   canMove: 1
+  baseTextColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightedTextColor: {r: 0.10617697, g: 1, b: 0, a: 1}
   textMesh: {fileID: 8868683720186858820}
   target: {fileID: 2038484866915185816}
 --- !u!65 &3520968234086610746
@@ -67,7 +68,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
