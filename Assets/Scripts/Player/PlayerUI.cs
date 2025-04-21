@@ -19,14 +19,14 @@ namespace Player
             _textMeshPro.text = "";
 
 
-            GameManager.Instance.Player.PlayerInput.OnPlayerTypeLetter += HandlePlayerHealthChanged;
+            GameManager.Instance.Player.PlayerInput.OnTypedChanged += HandleOnTypeChanged;
 
             DontDestroyOnLoad(this);
         }
 
-        private void HandlePlayerHealthChanged(object sender, PlayerInput.PlayerTypeEventArgs e)
+        private void HandleOnTypeChanged(string e)
         {
-            _textMeshPro.text = e.CurrentText;
+            _textMeshPro.text = e;
         }
     }
 }

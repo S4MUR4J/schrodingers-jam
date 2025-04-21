@@ -9,7 +9,7 @@ namespace Player
     {
         [SerializeField] private float lerpSpeed = 5f;
         private BaseNode PositionNode { get; set; }
-        public PlayerInput PlayerInput { get; set; }
+        public PlayerTypingInput PlayerInput { get; set; }
 
 
         private bool _isLerping;
