@@ -40,17 +40,29 @@ namespace Player
             _controls = new PlayerControls();
             _controls.Gameplay.Enable();
 
-            _controls.Gameplay.TypeCharacter.performed += OnAnyKeyPressed;
+            Keyboard.current.onTextInput += OnTextInput;
+
+
             _controls.Gameplay.ClearInput.performed += OnClearInput;
             _controls.Gameplay.ConfirmInput.performed += OnConfirmInput;
         }
 
         private void OnDisable()
         {
-            _controls.Gameplay.TypeCharacter.performed -= OnAnyKeyPressed;
+            Keyboard.current.onTextInput -= OnTextInput;
+
+
             _controls.Gameplay.ClearInput.performed -= OnClearInput;
             _controls.Gameplay.ConfirmInput.performed -= OnConfirmInput;
             _controls.Gameplay.Disable();
+        }
+
+        private void OnTextInput(char character)
+        {
+            if (char.IsControl(character)) return;
+
+            _typedLetters.Add(character);
+            OnTypedChanged?.Invoke(TypedSentence);
         }
 
         private void OnClearInput(InputAction.CallbackContext ctx)
@@ -60,36 +72,7 @@ namespace Player
 
         private void OnConfirmInput(InputAction.CallbackContext ctx)
         {
-            Debug.Log("OnConfirmInput called with current input" + GetCurrentInput());
             patternMatcher?.TryMatch();
-        }
-
-        private void OnAnyKeyPressed(InputAction.CallbackContext ctx)
-        {
-            var keyboard = Keyboard.current;
-
-            var pressedKey = keyboard?.allKeys.FirstOrDefault(k => k is { wasPressedThisFrame: true });
-
-            if (pressedKey == null || string.IsNullOrEmpty(pressedKey.displayName))
-                return;
-
-            if (pressedKey == keyboard.enterKey ||
-                pressedKey == keyboard.tabKey ||
-                pressedKey == keyboard.escapeKey ||
-                pressedKey == keyboard.shiftKey ||
-                pressedKey == keyboard.ctrlKey ||
-                pressedKey == keyboard.altKey)
-                return;
-
-            var inputChar = pressedKey.displayName[0];
-
-            if (!char.IsLetterOrDigit(inputChar) && !char.IsPunctuation(inputChar) && !char.IsSymbol(inputChar))
-                return;
-
-            inputChar = keyboard.shiftKey.isPressed ? char.ToUpper(inputChar) : char.ToLower(inputChar);
-
-            _typedLetters.Add(inputChar);
-            OnTypedChanged?.Invoke(TypedSentence);
         }
 
         public void Clear()
