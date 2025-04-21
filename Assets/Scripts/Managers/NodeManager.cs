@@ -37,8 +37,6 @@ namespace Managers
 
         public BaseNode GetClosestNode(Vector3 position)
         {
-            Debug.Log("GetClosestNode called for" + position);
-
             var origin = position + Vector3.up * 1f;
 
             if (!Physics.Raycast(origin, Vector3.down, out var hit, 5f))
@@ -48,7 +46,6 @@ namespace Managers
             }
 
             var node = hit.collider.GetComponent<BaseNode>();
-            Debug.Log(node);
             return node != null ? node : null;
         }
 

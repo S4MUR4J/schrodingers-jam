@@ -50,8 +50,7 @@ namespace Nodes
 
         public void Highlight(bool highlighted)
         {
-            Debug.Log($"Highlighted called with: {highlighted}");
-
+            
             if (!textMesh)
             {
                 return;
