@@ -311,8 +311,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canMove: 1
-  baseTextColor: {r: 1, g: 1, b: 1, a: 0}
-  highlightedTextColor: {r: 1, g: 0, b: 0, a: 0}
+  baseTextColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightedTextColor: {r: 1, g: 0, b: 0, a: 1}
   textMesh: {fileID: 2592049674782841993}
   target: {fileID: 4945247641448686933}
   nextSceneName: test

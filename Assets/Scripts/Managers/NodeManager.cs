@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Nodes;
 using UnityEngine;
 using Utils;
@@ -10,23 +9,17 @@ namespace Managers
     {
         [SerializeField] private LayerMask nodeLayer;
         public static NodeManager Instance { get; private set; }
-
-        private readonly List<BaseNode> allNodes = new();
-
-
+        
         private int _wordIndex;
 
         private void Awake()
         {
             Instance = this;
-
-
             DontDestroyOnLoad(this);
         }
 
         public void Register(BaseNode node)
         {
-            allNodes.Add(node);
             if (_wordIndex >= Constants.Words.Count)
             {
                 _wordIndex = 0;
@@ -34,22 +27,7 @@ namespace Managers
             
             node.Pattern = Constants.Words[_wordIndex++];
         }
-
-        public BaseNode GetClosestNode(Vector3 position)
-        {
-            var origin = position + Vector3.up * 1f;
-
-            if (!Physics.Raycast(origin, Vector3.down, out var hit, 5f))
-            {
-                Debug.LogError("Not not found for position " + position);
-                return null;
-            }
-
-            var node = hit.collider.GetComponent<BaseNode>();
-            return node != null ? node : null;
-        }
-
-
+        
         public List<BaseNode> GetNeighbors(BaseNode node)
         {
             if (!node) return new List<BaseNode>();

@@ -8,6 +8,7 @@ namespace Player
     public class Player : MonoBehaviour
     {
         [SerializeField] private float lerpSpeed = 5f;
+        [SerializeField] private BaseNode startNode;
         private BaseNode PositionNode { get; set; }
         public PlayerTypingInput PlayerInput { get; set; }
 
@@ -22,19 +23,14 @@ namespace Player
         {
             GameManager.Instance.Player = this;
 
-            PositionNode = NodeManager.Instance.GetClosestNode(transform.position);
-
-            if (PositionNode == null)
+            if (startNode == null)
             {
-                Debug.LogError("Starting Node Not Found For Player");
-            }
-            else
-            {
-                PositionNode.DisableTextMesh();
-                _neighbours = NodeManager.Instance.GetNeighbors(PositionNode);
-                HighlightNeighbours(true);
+                Debug.LogError("Starting Node Not Set For Player");
+                return;
             }
 
+            PositionNode = startNode;
+            TeleportToStartingPosition();
 
             DontDestroyOnLoad(this);
         }
@@ -47,6 +43,7 @@ namespace Player
                 {
                     doorNode.WalkInto();
                 }
+
                 return;
             }
 
@@ -77,11 +74,19 @@ namespace Player
             HighlightNeighbours(true);
             PositionNode = node;
 
-
-            //move player to target position
-            transform.parent = node.GetTarget();
+            
             _targetPosition = node.GetTarget().position;
             _isLerping = true;
+        }
+
+        private void TeleportToStartingPosition()
+        {
+            PositionNode.DisableTextMesh();
+            _neighbours = NodeManager.Instance.GetNeighbors(PositionNode);
+            HighlightNeighbours(true);
+            _targetPosition = PositionNode.GetTarget().position;
+
+            transform.position = _targetPosition;
         }
 
         private void HighlightNeighbours(bool highlight)
