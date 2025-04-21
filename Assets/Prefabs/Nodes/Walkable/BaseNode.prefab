@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2559871560194966241}
-  - component: {fileID: 4151631568053504755}
   - component: {fileID: 3520968234086610746}
+  - component: {fileID: 402864927820959726}
   m_Layer: 3
   m_Name: BaseNode
   m_TagString: Untagged
@@ -36,23 +36,6 @@ Transform:
   - {fileID: 2038484866915185816}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4151631568053504755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1329804753993493257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87325df7e70c44caab451d01c5ecaee7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canMove: 1
-  baseTextColor: {r: 1, g: 1, b: 1, a: 1}
-  highlightedTextColor: {r: 0.10617697, g: 1, b: 0, a: 1}
-  textMesh: {fileID: 8868683720186858820}
-  target: {fileID: 2038484866915185816}
 --- !u!65 &3520968234086610746
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -74,6 +57,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &402864927820959726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1329804753993493257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87325df7e70c44caab451d01c5ecaee7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canMove: 1
+  baseTextColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightedTextColor: {r: 0, g: 1, b: 0.09055519, a: 1}
+  textMesh: {fileID: 8868683720186858820}
+  target: {fileID: 2038484866915185816}
 --- !u!1 &2273831709984093626
 GameObject:
   m_ObjectHideFlags: 0

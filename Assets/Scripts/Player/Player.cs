@@ -43,6 +43,10 @@ namespace Player
         {
             if (!_isLerping)
             {
+                if (PositionNode is DoorNode doorNode)
+                {
+                    doorNode.WalkInto();
+                }
                 return;
             }
 

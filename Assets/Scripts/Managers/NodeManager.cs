@@ -31,7 +31,7 @@ namespace Managers
             {
                 _wordIndex = 0;
             }
-
+            
             node.Pattern = Constants.Words[_wordIndex++];
         }
 

@@ -11,6 +11,7 @@ namespace Nodes
         {
             get => textMesh.text;
             set => textMesh.text = value;
+            
         }
 
 
@@ -43,14 +44,13 @@ namespace Nodes
                 return;
             }
 
+            textMesh.enabled = true;
             textMesh.color = baseTextColor;
-
             NodeManager.Instance.Register(this);
         }
 
         public void Highlight(bool highlighted)
         {
-            
             if (!textMesh)
             {
                 return;
